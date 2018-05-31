@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/timeTableFragment">
+
+    <fragment
+        android:id="@+id/timeTableFragment"
+        android:name="com.flycode.timespace.ui.main.timetable.TimeTableFragment"
+        android:label="time_table_fragment"
+        tools:layout="@layout/time_table_fragment" />
+</navigation>

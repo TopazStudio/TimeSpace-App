@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/authLandingPageFragment">
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.flycode.timespace.ui.auth.signup.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/sign_up_fragment" />
+    <fragment
+        android:id="@+id/authLandingPageFragment"
+        android:name="com.flycode.timespace.ui.auth.landingPage.AuthLandingPageFragment"
+        android:label="AuthLandingPageFragment"
+        tools:layout="@layout/fragment_auth_landing_page" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.flycode.timespace.ui.auth.signin.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/sign_in_fragment" />
+</navigation>

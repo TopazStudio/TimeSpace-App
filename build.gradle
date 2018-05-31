@@ -1,0 +1,54 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.2.30'
+    ext.tools_version = '3.1.2'
+    ext.apollo_version = '0.5.0'
+    ext.nav_version = "1.0.0-alpha01"
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:${tools_version}"
+
+        //Kotlin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+
+        //Navigation safe args
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:${nav_version}"
+
+        //apollo gradle
+        classpath "com.apollographql.apollo:apollo-gradle-plugin:${apollo_version}"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    dbflow_version = "4.2.4"
+    kotlin_version = '1.2.30'
+    apollo_version = '0.5.0'
+    dagger_version = "2.15"
+    retrofit_version = "2.4.0"
+    nav_version = "1.0.0-alpha01"
+    room_version = "1.1.0"
+    lifecycle_version = "1.1.1"
+    tools_version = "3.1.2"
+}

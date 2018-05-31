@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.landingPage.AuthLandingPageFragment"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="bottom"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="20dp"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/app_name_logo_white" />
+
+    <Button
+        android:id="@+id/sign_in_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/signin_button"
+        android:clickable="true"
+        android:onClick="onSignIn"
+        android:text="@string/sign_in_text_btn"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/signup_message"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/sign_up_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/white_corner_round"
+        android:clickable="true"
+        android:onClick="onSignUp"
+        android:text="@string/sign_up_text_btn"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorWhite"
+        android:textSize="20sp" />
+
+</LinearLayout>
