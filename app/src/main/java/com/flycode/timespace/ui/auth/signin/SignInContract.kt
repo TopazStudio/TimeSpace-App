@@ -4,5 +4,7 @@ import com.flycode.timespace.ui.base.MvpView
 
 interface SignInContract {
     interface SignInFragment : MvpView
-    interface SignInPresenter<SignInFragment>
+    interface SignInPresenter<SignInFragment>{
+        fun login(email: String,password: String)
+    }
 }

@@ -3,13 +3,14 @@
 buildscript {
     ext.kotlin_version = '1.2.30'
     ext.tools_version = '3.1.2'
-    ext.apollo_version = '0.5.0'
+    ext.apollo_version = '0.4.4'
     ext.nav_version = "1.0.0-alpha01"
 
     repositories {
         google()
         jcenter()
         mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${tools_version}"
@@ -21,7 +22,8 @@ buildscript {
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:${nav_version}"
 
         //apollo gradle
-        classpath "com.apollographql.apollo:apollo-gradle-plugin:${apollo_version}"
+//        classpath "com.apollographql.apollo:apollo-gradle-plugin:${apollo_version}"
+//        classpath 'com.apollographql.apollo:apollo-gradle-plugin:0.5.1-SNAPSHOT'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -34,6 +36,7 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
 }
 
@@ -44,7 +47,7 @@ task clean(type: Delete) {
 ext {
     dbflow_version = "4.2.4"
     kotlin_version = '1.2.30'
-    apollo_version = '0.5.0'
+    apollo_version = '0.4.4'
     dagger_version = "2.15"
     retrofit_version = "2.4.0"
     nav_version = "1.0.0-alpha01"

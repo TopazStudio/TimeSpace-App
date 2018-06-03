@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/dailyViewFragment">
+
+    <fragment
+        android:id="@+id/dailyViewFragment"
+        android:name="com.flycode.timespace.ui.main.timetable.dailyview.DailyViewFragment"
+        android:label="DailyViewFragment"
+        tools:layout="@layout/fragment_daily_view" />
+    <fragment
+        android:id="@+id/weeklyViewFragment"
+        android:name="com.flycode.timespace.ui.main.timetable.weeklyview.WeeklyViewFragment"
+        android:label="WeeklyViewFragment"
+        tools:layout="@layout/fragment_weekly_view" />
+    <fragment
+        android:id="@+id/monthlyViewFragment"
+        android:name="com.flycode.timespace.ui.main.timetable.monthlyview.MonthlyViewFragment"
+        android:label="MonthlyViewFragment"
+        tools:layout="@layout/fragment_monthly_view" />
+</navigation>

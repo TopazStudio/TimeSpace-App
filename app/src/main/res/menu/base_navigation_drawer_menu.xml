@@ -4,7 +4,7 @@
         android:id="@+id/menu_top"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/timeTableFragment"
+            android:id="@id/timeTableFragment"
             android:title="@string/timetables_navigation_item"/>
     </group>
 </menu>

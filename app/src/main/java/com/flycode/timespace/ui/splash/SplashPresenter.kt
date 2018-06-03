@@ -30,7 +30,7 @@ class SplashPresenter<V : SplashContract.SplashActivity>(mvpView: V)
      *
      */
     private fun isUserRegistered(): Boolean {
-        return utilityWrapper.defaultUser.id != 0
+        return utilityWrapper.defaultUser.id == 0
     }
 
     companion object {

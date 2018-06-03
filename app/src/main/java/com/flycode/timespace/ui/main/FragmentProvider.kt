@@ -1,8 +1,8 @@
 package com.flycode.timespace.ui.main
 
-import com.flycode.timespace.di.scope.PerFragment
+import com.flycode.timespace.di.scope.PerFragmentLevel1
+import com.flycode.timespace.ui.main.timetable.FragmentProvider
 import com.flycode.timespace.ui.main.timetable.TimeTableFragment
-import com.flycode.timespace.ui.main.timetable.TimeTableModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,7 +10,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentProvider {
 
-    @PerFragment
-    @ContributesAndroidInjector(modules = [(TimeTableModule::class)])
+    @PerFragmentLevel1
+    @ContributesAndroidInjector(modules = [(FragmentProvider::class)])
     internal abstract fun timeTableFragment(): TimeTableFragment
 }

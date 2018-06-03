@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/dailyViewFragment"
+        android:icon="@drawable/ic_daily_view"
+        android:title="@string/daily_view" />
+
+    <item
+        android:id="@id/weeklyViewFragment"
+        android:icon="@drawable/ic_weekly_view"
+        android:title="@string/weekly_view" />
+
+    <item
+        android:id="@id/monthlyViewFragment"
+        android:icon="@drawable/ic_monthly_view"
+        android:title="@string/monthly_view" />
+
+</menu>

@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.apollographql.android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
-apply plugin: 'com.apollographql.android'
 
 android {
     compileSdkVersion 27
@@ -24,6 +24,10 @@ android {
     dataBinding {
         enabled = true
     }
+    /*apollo {
+        schemaFilePath = "/home/erick/AndroidStudioProjects/MAINPROJECTS/TimeSpace/app/src/main/graphql/schema.json"
+        outputPackageName = "com.flycode.timespace"
+    }*/
 }
 
 dependencies {
@@ -55,6 +59,13 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${rootProject.retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.retrofit_version}"
     implementation "com.squareup.retrofit2:adapter-rxjava:${rootProject.retrofit_version}"
+
+    //Apollo
+//    implementation "com.apollographql.apollo:apollo-runtime:${rootProject.apollo_version}"
+//    implementation 'com.apollographql.apollo:apollo-runtime:0.5.1-SNAPSHOT'
+//    implementation "com.apollographql.apollo:apollo-rx2-support:${rootProject.apollo_version}"
+//    implementation "com.apollographql.apollo:apollo-android-support:${rootProject.apollo_version}"
+//    implementation "com.apollographql.apollo:apollo-http-cache:${rootProject.apollo_version}"
 
     //UTILS
     implementation 'com.google.code.gson:gson:2.8.4'
@@ -94,4 +105,15 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.5.0'
 //    implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.libRG:customtextview:1.4'
+
+    //Calendar
+    implementation 'com.github.alamkanak:android-week-view:1.2.6'
+    implementation 'com.github.todou:calendarpager:1.0.0'
+
+    // FLEXIBLE ADAPTER
+    implementation 'eu.davidea:flexible-adapter:5.0.4'
+    implementation 'eu.davidea:flexible-adapter-ui:1.0.0-b4'
+    implementation 'eu.davidea:flexible-adapter-livedata:1.0.0-b2'
+    implementation 'eu.davidea:flexible-adapter-databinding:1.0.0-b3'
 }

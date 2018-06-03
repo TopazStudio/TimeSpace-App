@@ -10,10 +10,14 @@ import androidx.navigation.fragment.NavHostFragment
 import com.flycode.timespace.R
 import com.flycode.timespace.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.sign_in_fragment.*
+import javax.inject.Inject
 
 class SignInFragment
     : BaseFragment(),
     SignInContract.SignInFragment{
+
+    @Inject
+    lateinit var presenter : SignInContract.SignInPresenter<SignInContract.SignInFragment>
 
     companion object {
         fun newInstance() = SignInFragment()
@@ -31,7 +35,7 @@ class SignInFragment
         viewModel = ViewModelProviders.of(this).get(SignInViewModel::class.java)
 
         sign_in_btn.setOnClickListener{
-            //TODO: sign in logic
+            presenter.login(tv_email.text.toString(),tv_password.text.toString())
         }
 
         sign_up_text_btn.setOnClickListener{
