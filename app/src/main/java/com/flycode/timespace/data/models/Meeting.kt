@@ -1,31 +1,64 @@
 package com.flycode.timespace.data.models
 
-import android.databinding.BaseObservable
 import com.flycode.timespace.data.db.Database
-import com.raizlabs.android.dbflow.annotation.Column
-import com.raizlabs.android.dbflow.annotation.PrimaryKey
-import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.annotation.*
+import com.raizlabs.android.dbflow.sql.language.SQLite
+import com.raizlabs.android.dbflow.structure.BaseModel
 
 @Table(database = (Database::class), name = "meetings" )
+@ManyToMany(referencedTable = Tag::class)
 data class Meeting(
-    @field: [PrimaryKey(autoincrement = true) Column()]
+    @PrimaryKey(autoincrement = true)
+    @Column()
     var id: Int = -1,
 
-    @field: Column()
-    var owner_id: Int = 0,
-
-    @field: Column()
-    var time_table_id: Int = 0,
-
-    @field: Column()
+    @Column()
     var name: String = "",
 
-    @field: Column()
+    @Column()
     var note: String = "",
 
-    @field: Column()
+    @Column()
     var color: Int = 0,
 
-    @field: Column()
-    var description: String = ""
-): BaseObservable()
+    @Column()
+    var description: String = "",
+
+    //RELATIONSHIPS
+
+    @ForeignKey(saveForeignKeyModel = true)
+    var location: Location? = null,
+
+    var times : List<Time>? = null,
+
+    @ForeignKey()
+    var timeTable: TimeTable? = null,
+
+    @ForeignKey()
+    var owner: User? = null,
+
+    var attendances : List<Attendance>? = null
+
+): BaseModel(){
+
+    @OneToMany(methods = [OneToMany.Method.ALL],variableName = "times")
+    fun getMyTimes() : List<Time>?{
+        if (times == null)
+            times = SQLite.select()
+                    .from(Time::class.java)
+                    .where(Time_Table.timable_id.eq(id),Time_Table.timable_type.eq("meeting"))
+                    .queryList()
+        return times
+    }
+
+    @OneToMany(methods = [OneToMany.Method.ALL],variableName = "attendances")
+    fun getMyAttendances() : List<Attendance>?{
+        if (attendances == null)
+            attendances = SQLite.select()
+                    .from(Attendance::class.java)
+                    .where(Attendance_Table.attendable_id.eq(id),Attendance_Table.attendable_type.eq("meeting"))
+                    .queryList()
+        return attendances
+    }
+
+}

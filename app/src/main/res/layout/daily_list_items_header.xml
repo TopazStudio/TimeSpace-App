@@ -5,6 +5,7 @@
     android:layout_height="50dp"
     android:padding="10dp"
     android:orientation="horizontal"
+    android:background="@color/colorWhite"
     android:elevation="3dp">
 
     <LinearLayout

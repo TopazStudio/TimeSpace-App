@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flycode.timespace.R
-import com.flycode.timespace.ui.base.BaseFragment
+import dagger.android.support.DaggerFragment
 
-class TimeTableFragment : BaseFragment() {
+class TimeTableFragment : DaggerFragment() {
 
     companion object {
         fun newInstance() = TimeTableFragment()

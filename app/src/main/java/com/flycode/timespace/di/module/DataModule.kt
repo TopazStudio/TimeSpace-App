@@ -1,15 +1,33 @@
 package com.flycode.timespace.di.module
 
 import android.content.Context
+import android.content.SharedPreferences
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Operation
+import com.apollographql.apollo.api.ResponseField
+import com.apollographql.apollo.cache.normalized.CacheKey
+import com.apollographql.apollo.cache.normalized.CacheKeyResolver
+import com.apollographql.apollo.cache.normalized.NormalizedCacheFactory
+import com.apollographql.apollo.cache.normalized.lru.EvictionPolicy
+import com.apollographql.apollo.cache.normalized.lru.LruNormalizedCache
+import com.apollographql.apollo.cache.normalized.lru.LruNormalizedCacheFactory
+import com.apollographql.apollo.cache.normalized.sql.ApolloSqlHelper
+import com.apollographql.apollo.cache.normalized.sql.SqlNormalizedCacheFactory
+import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.flycode.timespace.data.Config
 import com.flycode.timespace.data.models.User
+import com.flycode.timespace.data.network.TempService
 import com.raizlabs.android.dbflow.config.DatabaseDefinition
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import org.jetbrains.annotations.NotNull
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
@@ -41,27 +59,106 @@ open class DataModule{
         return Cache(context.cacheDir, (100 * 1024 * 1024).toLong())//100 MB cache
     }
 
-    /*@Provides
+    @Provides
     @Singleton
-    fun provideApolloGraphqlCache(context: Context): ApolloHttpCache {
+    fun provideApolloCacheKeyResolver(context: Context): CacheKeyResolver {
+        return object : CacheKeyResolver() {
+            @NotNull
+            override fun fromFieldRecordSet(@NotNull field: ResponseField, @NotNull recordSet: Map<String, Any>): CacheKey {
+//                val typeName = recordSet["__typename"] as String
+//                if ("User" == typeName) {
+//                    val userKey = typeName + "." + recordSet["login"]
+//                    return CacheKey.from(userKey)
+//                }
+                if (recordSet.containsKey("id")) {
+                    val typeNameAndIDKey = recordSet["__typename"].toString() + "." + recordSet["id"]
+                    return formatCacheKey(typeNameAndIDKey)
+                }
+                return CacheKey.NO_KEY
+            }
 
-        //Size in bytes of the cache
-        val size = 1024 * 1024
+            // Use this resolver to customize the key for fields with variables: eg entry(repoFullName: $repoFullName).
+            // This is useful if you want to make query to be able to resolved, even if it has never been run before.
+            @NotNull
+            override fun fromFieldArguments(@NotNull field: ResponseField, @NotNull variables: Operation.Variables): CacheKey {
+                return CacheKey.NO_KEY
+            }
 
-        //Create the http response cache store
-        return ApolloHttpCache(DiskLruHttpCacheStore(context.cacheDir, size.toLong()))
-    }*/
+            fun formatCacheKey(id: String?): CacheKey {
+                return if (id == null || id.isEmpty()) {
+                    CacheKey.NO_KEY
+                } else {
+                    CacheKey.from(id)
+                }
+            }
+        }
+    }
+
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(cache: Cache): OkHttpClient {
+    fun provideApolloNormailzedCache(context: Context): NormalizedCacheFactory<LruNormalizedCache> {
+        val apolloSqlHelper = ApolloSqlHelper(context, "TimeSpaceCache")
+        return LruNormalizedCacheFactory(EvictionPolicy.NO_EVICTION)
+                .chain(SqlNormalizedCacheFactory(apolloSqlHelper))
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(context: Context): SharedPreferences {
+        return context.getSharedPreferences("Main", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+            cache: Cache,
+            @Named("authentication_interceptor") authenticationInterceptor: Interceptor,
+            @Named("network_interceptor") networkInterceptor: Interceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
                 .cache(cache)
-                //.addInterceptor(interceptor)
+                .addInterceptor(authenticationInterceptor)
+                .addInterceptor(networkInterceptor)
                 //.addInterceptor(httpLoggingInterceptor)
                 //.addNetworkInterceptor(stethoInterceptor)
                 //.addNetworkInterceptor(networkInterceptor)
+                .addNetworkInterceptor(StethoInterceptor())
                 .build()
+    }
+
+    @Named("authentication_interceptor")
+    @Provides
+    @Singleton
+    fun authenticationInterceptor(
+            sharedPreferences: SharedPreferences
+    ): Interceptor = Interceptor { chain ->
+        var request = chain.request()
+
+        if (!sharedPreferences.getString("token",null).isNullOrEmpty()) {
+
+            val builder = request
+                    .newBuilder()
+                    .header("Authorization", sharedPreferences.getString("token", null))
+
+            request = builder.build()
+        }
+        chain.proceed(request)
+    }
+
+    @Named("network_interceptor")
+    @Provides
+    @Singleton
+    fun provideIntercepter(
+            sharedPreferences: SharedPreferences
+    ): Interceptor = Interceptor { chain ->
+        var request = chain.request()
+        val builder = request
+                .newBuilder()
+                .header("X-Requested-With","XMLHttpRequest")
+
+        request = builder.build()
+        chain.proceed(request)
     }
 
     @Provides
@@ -72,19 +169,42 @@ open class DataModule{
 
     @Provides
     @Singleton
-    fun provideRxJava2CallAdapterFactory(): RxJavaCallAdapterFactory {
-        return RxJavaCallAdapterFactory.create()
+    fun provideRxJava2CallAdapterFactory(): RxJava2CallAdapterFactory {
+        return RxJava2CallAdapterFactory.create()
     }
 
-   /* @Provides
+    @Provides
     @Singleton
-    fun provideApolloClient(okHttpClient: OkHttpClient,
-                            apolloHttpCache: ApolloHttpCache) : ApolloClient =
+    fun provideApolloClient(
+            okHttpClient: OkHttpClient,
+            normalizedCacheFactory: NormalizedCacheFactory<LruNormalizedCache>,
+            cacheKeyResolver: CacheKeyResolver
+    ) : ApolloClient =
         ApolloClient.builder()
                 .serverUrl(Config.GRAPHQL_ENDPOINT)
-                .httpCache(apolloHttpCache)
+                .normalizedCache(normalizedCacheFactory, cacheKeyResolver)
                 .okHttpClient(okHttpClient)
-                .build()*/
+                .build()
 
+    @Provides
+    @Singleton
+    fun provideRetrofit(
+            okHttpClient: OkHttpClient,
+            gsonConverterFactory: GsonConverterFactory,
+            rxJava2CallAdapterFactory: RxJava2CallAdapterFactory
+    ): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(Config.BACKEND_ENDPOINT)
+                .addConverterFactory(gsonConverterFactory)
+                .addCallAdapterFactory(rxJava2CallAdapterFactory)
+                .client(okHttpClient)
+                .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTempService(
+            retrofit: Retrofit
+    ): TempService = retrofit.create(TempService::class.java)
 
 }

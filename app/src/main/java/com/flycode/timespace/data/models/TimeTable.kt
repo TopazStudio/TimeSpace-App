@@ -1,31 +1,36 @@
 package com.flycode.timespace.data.models
 
-import android.databinding.BaseObservable
 import com.flycode.timespace.data.db.Database
-import com.raizlabs.android.dbflow.annotation.Column
-import com.raizlabs.android.dbflow.annotation.PrimaryKey
-import com.raizlabs.android.dbflow.annotation.Table
+import com.raizlabs.android.dbflow.annotation.*
+import com.raizlabs.android.dbflow.structure.BaseModel
 
 @Table(database = (Database::class), name = "timetables" )
+@ManyToMany(referencedTable = Tag::class)
 data class TimeTable(
-        @field: [PrimaryKey(autoincrement = true) Column()]
+        @PrimaryKey(autoincrement = true)
+        @Column()
         var id: Int = -1,
-
-        @field: Column()
-        var owner_id: Int = 0,
-
-        @field: Column()
-        var time_table_id: Int = 0,
 
         @field: Column()
         var name: String = "",
 
         @field: Column()
-        var note: String = "",
+        var type: String = "",
+
+        @field: Column()
+        var status: Int = 0,
 
         @field: Column()
         var color: Int = 0,
 
         @field: Column()
-        var description: String = ""
-): BaseObservable()
+        var priority: Int = 0,
+
+        @ForeignKey()
+        var owner: User? = null,
+
+        @ForeignKey()
+        var group: Group? = null
+
+        //The one to many relationships
+): BaseModel()

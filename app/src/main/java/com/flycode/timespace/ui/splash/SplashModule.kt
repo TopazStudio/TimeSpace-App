@@ -1,5 +1,6 @@
 package com.flycode.timespace.ui.splash
 
+import android.arch.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
 
@@ -7,8 +8,18 @@ import dagger.Provides
 class SplashModule{
 
     @Provides
-    fun providePresenter(splashFragment : SplashActivity)
-            : SplashContract.SplashPresenter<SplashContract.SplashActivity>{
-        return SplashPresenter(splashFragment)
+    fun providePresenter(): SplashPresenter{
+        return SplashPresenter()
+    }
+
+    @Provides
+    fun provideViewModel(
+            splashActivity : SplashActivity,
+            splashPresenter: SplashPresenter
+    ): SplashViewModel{
+        val viewModel = ViewModelProviders.of(splashActivity).get(SplashViewModel::class.java)
+        splashPresenter.viewModel = viewModel
+        viewModel.presenter = splashPresenter
+        return viewModel
     }
 }

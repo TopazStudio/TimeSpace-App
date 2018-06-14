@@ -1,0 +1,53 @@
+mutation login($email: String!, $password: String!){
+    login(email: $email,password: $password){
+        token
+        user{
+            id
+            first_name
+            second_name
+            surname
+            name_prefix
+            status
+            email
+            tel
+        }
+    }
+}
+
+mutation registerUser($user: User_Input!, $password: String){
+    user(method: ADD,user: $user,password: $password){
+        id
+    }
+}
+
+mutation registerUserWithPictures(
+    $user: User_Input!,
+    $password: String,
+    $pictures: [Picture_Input!]
+){
+    user(
+        method: ADD,
+        user: $user,
+        password: $password,
+        pictures: $pictures
+    ){
+        id
+        first_name
+        second_name
+        surname
+        name_prefix
+        status
+        email
+        tel
+        pictures{
+            id
+            name
+            type
+            size
+            remote_location
+            description
+            picturable_id
+            picturable_type
+        }
+    }
+}

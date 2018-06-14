@@ -45,4 +45,6 @@
     <string name="daily_view">Daily</string>
     <string name="weekly_view">Weekly</string>
     <string name="monthly_view">Monthly</string>
+    <string name="choose_a_profile_picture">Choose a profile picture</string>
+    <string name="profile_pic">Profile pic</string>
 </resources>

@@ -1,10 +1,10 @@
 package com.flycode.timespace.ui.splash
 
-import com.flycode.timespace.ui.base.MvpView
+import com.flycode.timespace.ui.base.BaseContract
 
-interface SplashContract {
-    interface SplashActivity : MvpView
-    interface SplashPresenter<V : SplashActivity>{
+interface SplashContract : BaseContract{
+    interface SplashActivity : BaseContract.View
+    interface SplashPresenter<V : SplashActivity> : BaseContract.Presenter<V>{
         fun startCounting()
     }
 }

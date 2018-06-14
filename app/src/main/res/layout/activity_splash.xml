@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <data class="SplashActivityBinding"/>
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:context=".ui.splash.SplashActivity">
+
+    <ImageView
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:context=".ui.splash.SplashActivity">
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/app_name_logo" />
 
-        <ImageView
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/app_name_logo" />
-
-    </FrameLayout>
-</layout>
+</FrameLayout>

@@ -1,7 +1,10 @@
 package com.flycode.timespace.ui.auth.signin
 
-import android.arch.lifecycle.ViewModel;
+import com.flycode.timespace.data.models.Credentials
+import com.flycode.timespace.ui.base.BaseViewModel
 
-class SignInViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class SignInViewModel: BaseViewModel<SignInFragment, SignInPresenter>()
+        , SignInContract.SignInViewModel<SignInFragment,SignInPresenter>{
+
+    override val credentials: Credentials = Credentials()
 }

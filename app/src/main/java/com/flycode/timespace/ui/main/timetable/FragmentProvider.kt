@@ -2,10 +2,11 @@ package com.flycode.timespace.ui.main.timetable
 
 import com.flycode.timespace.di.scope.PerFragmentLevel2
 import com.flycode.timespace.ui.main.timetable.dailyview.DailyViewFragment
-import com.flycode.timespace.ui.main.timetable.dailyview.DailyViewList
-import com.flycode.timespace.ui.main.timetable.dailyview.DailyViewModule
+import com.flycode.timespace.ui.main.timetable.dailyview.list.DailyViewList
+import com.flycode.timespace.ui.main.timetable.dailyview.list.DailyViewModule
 import com.flycode.timespace.ui.main.timetable.monthlyview.MonthlyViewFragment
 import com.flycode.timespace.ui.main.timetable.weeklyview.WeeklyViewFragment
+import com.flycode.timespace.ui.main.timetable.weeklyview.WeeklyViewModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -25,6 +26,6 @@ abstract class FragmentProvider {
     internal abstract fun monthlyViewFragment(): MonthlyViewFragment
 
     @PerFragmentLevel2
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector(modules = [(WeeklyViewModule::class)])
     internal abstract fun weeklyViewFragment(): WeeklyViewFragment
 }

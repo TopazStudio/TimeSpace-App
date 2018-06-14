@@ -1,6 +1,7 @@
-package com.flycode.timespace.ui.main.timetable.dailyview
+package com.flycode.timespace.ui.main.timetable.dailyview.list
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +10,19 @@ import com.flycode.timespace.R
 import com.flycode.timespace.ui.base.BaseFragment
 import com.test.tudou.library.model.CalendarDay
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.daily_view_list.*
 import javax.inject.Inject
 
 
 class DailyViewList
-    : BaseFragment(),
+    : BaseFragment<DailyViewList, DailyViewPresenter, DailyViewViewModel>(),
         DailyViewContract.DailyViewList {
 
 
     @Inject
-    lateinit var presenter : DailyViewContract.DailyViewPresenter<DailyViewContract.DailyViewList>
+    override lateinit var viewModel: DailyViewViewModel
     /**
      * The day information is required from this list
      * */
@@ -52,10 +54,14 @@ class DailyViewList
         presenter.fetchItems(mCalendarDay)
     }
 
+    //Todo: figure out better way of passing context to presenter
+    override fun getFragmentContext(): Context? = context
+
     /**
      * Setup the recycler view by adding the adapter
      * */
-    override fun setupRecyclerView(adapter: FlexibleAdapter<IFlexible<*>>){
+    override fun setupRecyclerView(adapter: FlexibleAdapter<IFlexible<*>>,layoutManager: SmoothScrollLinearLayoutManager){
+        recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
     }
 

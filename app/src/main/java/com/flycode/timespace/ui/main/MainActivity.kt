@@ -9,11 +9,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.flycode.timespace.R
 import com.flycode.timespace.databinding.BaseActivityBinding
 import com.flycode.timespace.databinding.BaseNavDrawerHeadingBindings
-import com.flycode.timespace.ui.base.BaseActivity
-import com.flycode.timespace.util.setContentViewLazy
+import dagger.android.support.DaggerAppCompatActivity
 
 
-class MainActivity : BaseActivity(){
+class MainActivity : DaggerAppCompatActivity(){
 
     //Todo: find a way to make non null completely.
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle

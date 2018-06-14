@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flycode.timespace.R
-import com.flycode.timespace.ui.base.BaseFragment
 import com.test.tudou.library.WeekPager.adapter.WeekViewAdapter
 import com.test.tudou.library.WeekPager.view.WeekDayViewPager
 import com.test.tudou.library.model.CalendarDay
 import com.test.tudou.library.util.DayUtils
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_daily_view.*
 
 
 class DailyViewFragment
-    : BaseFragment(),
+    : DaggerFragment(),
         WeekDayViewPager.DayScrollListener{
 
     private val OFFSCREEN_PAGE_LIMIT = 3
@@ -46,9 +46,8 @@ class DailyViewFragment
         week_day_view_pager.setWeekRecyclerView(week_recycler_view)
         week_day_view_pager.setDayScrollListener(this)
         weekViewAdapter = WeekViewAdapter(context, week_day_view_pager)
-        weekViewAdapter.setTextNormalColor(resources.getColor(R.color.colorBlack))
+        weekViewAdapter.setTextNormalColor(resources.getColor(R.color.colorWhite))
         weekViewAdapter.setTextSelectColor(resources.getColor(R.color.colorWhite))
-        weekViewAdapter.setIndicatorColor(resources.getColor(R.color.colorBlack))
 
         //The recycler view
         week_recycler_view.adapter = weekViewAdapter

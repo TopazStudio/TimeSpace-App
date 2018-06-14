@@ -1,5 +1,6 @@
 package com.flycode.timespace;
 
+import com.facebook.stetho.Stetho
 import com.flycode.timespace.di.component.ApplicationComponent
 import com.flycode.timespace.di.component.DaggerApplicationComponent
 import com.raizlabs.android.dbflow.config.FlowManager
@@ -12,6 +13,7 @@ class TimeSpaceApplication : DaggerApplication() {
         super.onCreate()
         //Initialize DBFlow
         FlowManager.init(this)
+        Stetho.initializeWithDefaults(this)
     }
 
     override fun applicationInjector() : AndroidInjector<DaggerApplication>? {

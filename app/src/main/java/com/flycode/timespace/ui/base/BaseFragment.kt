@@ -3,22 +3,35 @@ package com.flycode.timespace.ui.base
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.annotation.CallSuper
+import android.support.annotation.Nullable
 import android.widget.Toast
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import dagger.android.support.DaggerFragment
 
-open class BaseFragment : DaggerFragment(), MvpView {
+abstract class BaseFragment<V : BaseContract.View, P : BaseContract.Presenter<V>, C : BaseContract.ViewModel<V,P>>
+    : DaggerFragment(),
+        BaseContract.View {
 
     private var currentRequestCode: Int = 0
+    protected lateinit var presenter: P
+    protected open lateinit var viewModel: C
+
+    @CallSuper
+    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        presenter = viewModel.presenter!!
+        presenter.attachLifecycle(lifecycle)
+        presenter.attachView(this as V)
+    }
 
     override fun navigateToActivity(from: Context?, to: Class<*>) {
         startActivity(Intent(from,to))
         activity?.finish()
     }
 
-    override fun navigateToFragment(from: Fragment?, to: Int){
+    fun navigateToFragment(to: Int){
         NavHostFragment.findNavController(this).navigate(to)
     }
 
@@ -46,7 +59,14 @@ open class BaseFragment : DaggerFragment(), MvpView {
     }
 
     override fun showError(message: String) {
-        //TODO: implement a better way of showing errors
+        //TODO: implement a better way of showing messages
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
+    @CallSuper
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachLifecycle(lifecycle)
+        presenter.detachView()
+    }
+
 }
