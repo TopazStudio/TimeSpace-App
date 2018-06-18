@@ -1,25 +1,24 @@
 <resources>
     <string name="app_name">TimeSpace</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="timespace">TimeSpace</string>
     <string name="timetables_navigation_item">TimeTables</string>
     <string name="navigation_open">open</string>
     <string name="navigation_close">close</string>
     <string name="btn_login">Sign In</string>
-    <string name="password">password</string>
+    <string name="password">Password</string>
     <string name="signup_message">Don\'t have an account?</string>
     <string name="sign_up_text_btn">Sign Up</string>
     <string name="login_message">Already have an account?</string>
     <string name="sign_in_text_btn">Sign In</string>
-    <string name="re_type_password">re-type password</string>
-    <string name="username">username</string>
-    <string name="full_name">full name</string>
-    <string name="email">email</string>
+    <string name="re_type_password">Re-type password</string>
+    <string name="username">Username</string>
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
     <string name="first_name">First name</string>
     <string name="second_name">Second name</string>
-    <string name="surname">surname</string>
+    <string name="surname">Surname</string>
     <string name="or">or</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">Home</string>
@@ -47,4 +46,26 @@
     <string name="monthly_view">Monthly</string>
     <string name="choose_a_profile_picture">Choose a profile picture</string>
     <string name="profile_pic">Profile pic</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="tel">Tel</string>
+    <string name="sign_up_with">SIGN UP WITH</string>
+    <string name="facebook">FACEBOOK</string>
+    <string name="gmail">GMAIL</string>
+    <string name="tweeter">TWEETER</string>
+    <string name="back">BACK</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="finish">FINISH</string>
+    <string name="add_a_profile_pic">ADD A PROFILE PIC</string>
+    <string name="profile_pic_explanation">Your profile pic helps your peers, colegues and friends identify you quickly.</string>
+    <string name="choose_from_our_selection">ChOOSE FROM OUR SELECTION</string>
+    <string name="google">GOOGLE</string>
+    <string name="google_sign_in_success_more_info">You have been signed in by Google successfully. We just need a few more details.</string>
+    <string name="facebook_sign_in_success_more_info">You have been signed in by Facebook successfully. We just need a few more details.</string>
+    <string name="facebook_app_id">2096113567340294</string>
+    <string name="fb_login_protocol_scheme">fb2096113567340294</string>
+    <string name="personal_details">PERSONAL DETAILS</string>
+    <string name="lets_get_a_few_details">LETS GET A FEW DETAILS</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="sign_in_with">SIGN IN WITH</string>
 </resources>

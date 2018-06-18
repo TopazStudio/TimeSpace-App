@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.auth.signup.ProfilePic.ProfilePicFragment"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="3dp"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/add_a_profile_pic"
+                    android:textColor="@color/colorDarkGray"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/colorPrimaryDark"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <RelativeLayout
+                android:id="@+id/profile_pic_frame"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center">
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/image_placeholder"
+                    app:siBorderColor="@color/colorPrimaryDark"
+                    app:siBorderWidth="3dp"
+                    android:contentDescription="@string/profile_pic" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_add_profile_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@id/profile_pic"
+                    android:layout_alignBottom="@id/profile_pic"
+                    app:backgroundTint="@color/colorGreen"
+                    app:borderWidth="0dp"
+                    app:elevation="6dp"
+                    app:fabSize="normal"
+                    app:srcCompat="@drawable/ic_edit_24dp" />
+
+                <ProgressBar
+                    android:id="@+id/profile_pic_progress_bar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_pic_explanation"
+                android:layout_marginBottom="10dp"
+                android:textSize="15sp"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/btn_profile_pic_selection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/choose_from_our_selection"
+                android:textColor="@color/colorWhite"
+                android:padding="10dp"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!--NAV-->
+    <LinearLayout
+        android:id="@+id/layout_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite"
+        android:elevation="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/colorWhite"
+            android:text="@string/back"
+            android:textSize="20sp"
+            android:visibility="visible"
+            android:drawableStart="@drawable/ic_chevron_left_24dp"
+            android:background="@color/colorLtRed"/>
+
+        <Button
+            android:id="@+id/btn_middle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/colorWhite"
+            android:text="@string/finish"
+            android:visibility="visible"
+            android:textSize="20sp"
+            android:background="@color/colorPrimary"/>
+
+    </LinearLayout>
+</LinearLayout>
+

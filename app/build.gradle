@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -106,7 +108,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.5.0'
 //    implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
     implementation 'com.libRG:customtextview:1.4'
     implementation 'com.github.GoodieBag:PinView:v1.3'
 

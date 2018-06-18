@@ -2,10 +2,6 @@ package com.flycode.timespace.data.models
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
-import android.databinding.ObservableInt
-import com.flycode.musclemax_app.data.models.CustomTypes.ObservableFieldString
-import com.flycode.musclemax_app.data.models.TypeConverters.ObservableFieldStringConverter
-import com.flycode.musclemax_app.data.models.TypeConverters.ObservableIntConverter
 import com.flycode.timespace.data.db.Database
 import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.Column
@@ -13,10 +9,10 @@ import com.raizlabs.android.dbflow.annotation.OneToMany
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import com.raizlabs.android.dbflow.structure.BaseModel
+import java.io.Serializable
 
 @Table(database = (Database::class), name = "users" )
-class User : BaseObservable(){
+class User : BaseObservable(),Serializable{
     @field: [PrimaryKey Column(name = "id")]
     var id : Int =  0
 
@@ -54,7 +50,7 @@ class User : BaseObservable(){
 
     @field: [SerializedName("status") Column(name = "status")]
     @get: Bindable
-    var status: Int = 0
+    var status: Int = 1
         set(value) {
             field = value
             notifyChange()

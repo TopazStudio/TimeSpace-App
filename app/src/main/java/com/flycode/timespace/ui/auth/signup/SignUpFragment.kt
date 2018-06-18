@@ -1,26 +1,16 @@
 package com.flycode.timespace.ui.auth.signup
 
-import android.app.Activity.RESULT_OK
-import android.content.ContentResolver
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.databinding.DataBindingUtil
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
-import android.support.annotation.NonNull
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
-import com.afollestad.materialdialogs.MaterialDialog
 import com.flycode.timespace.R
-import com.flycode.timespace.databinding.SignUpBinding
+import com.flycode.timespace.data.models.User
 import com.flycode.timespace.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.sign_up_fragment.*
+import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
+
 
 class SignUpFragment
     : BaseFragment<SignUpFragment, SignUpPresenter, SignUpViewModel>(),
@@ -29,179 +19,45 @@ class SignUpFragment
     @Inject
     override lateinit var viewModel: SignUpViewModel
 
-    private lateinit var signUpBinding: SignUpBinding
-    private val SELECT_PHOTO = 1
-    private val CAPTURE_PHOTO = 2
-    private val PERMISSION_REQUEST_CODE = 3
-
     companion object {
+        const val UN_REGISTERED_USER = "un_registered_user"
+        const val EXTERNAL_AUTH_TYPE = "external_auth_type"
         fun newInstance() = SignUpFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        signUpBinding = DataBindingUtil.inflate(inflater,R.layout.sign_up_fragment, container, false)
-        signUpBinding.viewModel = viewModel
-        signUpBinding.setLifecycleOwner(this)
-        return signUpBinding.root
+        return inflater.inflate(R.layout.sign_up_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        sign_up_btn.setOnClickListener{
-            if(checkPasswordRetype())
-                presenter.signUp()
-        }
-
-        sign_in_text_btn.setOnClickListener{
-            NavHostFragment.findNavController(this).navigate(R.id.signUpFragment)
-            //TODO: clean up
-        }
-    }
-
-    private fun init(){
-//        checkImagePermissions()
-        setupProfilePic()
-        profile_pic_progress_bar.progress = 0
-        profile_pic_progress_bar.max = 100
-    }
-
-    private fun checkPasswordRetype(): Boolean{
-        return if (et_password_retype.text.toString() != et_password.text.toString()){
-            showError("The passwords do not match")
-            false
-        }else true
-    }
-
-    /**
-     * Show custom Chooser dialog allowing to choose method of adding a photo
-     * or removing the current one.
-     *
-     */
-    fun setupProfilePic() {
-        presenter.imageBitmap?.let {
-            profile_pic.setImageBitmap(it)
-        }
-        profile_pic.setOnClickListener{
-            context?.let {
-                MaterialDialog.Builder(it)
-                        .title("Add a progress photo")
-                        .items(R.array.uploadImage)
-                        .itemsIds(R.array.uploadImageItemIds)
-                        .itemsCallback({ _, _, position, _ ->
-                            when (position) {
-                                0 -> {
-                                    val photoPickerIntent = Intent(Intent.ACTION_PICK)
-                                    photoPickerIntent.type = "image/*"
-                                    startActivityForResult(photoPickerIntent, SELECT_PHOTO)
-                                }
-                                1 -> {
-                                    val photoCaptureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                                    startActivityForResult(photoCaptureIntent, CAPTURE_PHOTO)
-                                }
-                                2 -> {
-                                    profile_pic.setImageResource(R.drawable.image_placeholder)
-                                    //Don't save image. The placeholder will be set by default
-                                    presenter.doImageSave = false
-                                    presenter.onClearImageBitmap()
-                                }
-                            }
-                        })
-                        .show()
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        data?.let {
-            if (requestCode == SELECT_PHOTO) {
-                if (resultCode == RESULT_OK) {
-                    presenter.onPickerImageResult(data)
-                }
-            } else if (requestCode == CAPTURE_PHOTO) {
-                if (resultCode == RESULT_OK) {
-                    presenter.onCaptureImageResult(data)
+        if(arguments?.getSerializable(UN_REGISTERED_USER)  != null && arguments?.getString(EXTERNAL_AUTH_TYPE) != null ){
+            val user : User = arguments?.getSerializable(UN_REGISTERED_USER) as User
+            viewModel.user.apply {
+                this.first_name = user.first_name
+                this.second_name = user.second_name
+                this.surname = user.surname
+                this.email = user.email
+                this.tel = user.tel
+                this.password = "000000"
+                this.pictures.apply {
+                    this.add(com.flycode.timespace.data.models.Picture().apply {
+                        this.remote_location = user.pictures[0].remote_location
+                    })
                 }
             }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>,
-                                            @NonNull grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty()
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                profile_pic_section.visibility = View.VISIBLE
+            when (arguments?.getString(EXTERNAL_AUTH_TYPE)){
+                "google" -> viewModel.uiState.googleLoginSuccess = true
+                "facebook" -> viewModel.uiState.facebookLoginSuccess = true
             }
         }
     }
 
-    /**
-     * Show the progress bar on the progress photo
-     * to indicate the image is being loaded.
-     *
-     */
-    override fun showProgressBar() {
-        profile_pic_progress_bar.visibility = View.VISIBLE
+    override fun onSignIn(){
+        NavHostFragment.findNavController(auth_nav_fragment).navigate(R.id.signInFragment)
     }
-
-    /**
-     * Hide the progress bar on the progress photo
-     * to indicate the image is done being loaded.
-     *
-     */
-    override fun hideProgressBar() {
-        profile_pic_progress_bar.visibility = View.GONE
+    override fun onFinish(){
+        presenter.onFinish()
     }
-
-    override fun setPhotoProgress(progress: Int) {
-        profile_pic_progress_bar.progress = progress
-    }
-
-    override fun setImageBitmap(imageBitmap: Bitmap) {
-        profile_pic.maxWidth = 200
-        profile_pic.setImageBitmap(imageBitmap)
-    }
-
-    override fun getContentResolver(): ContentResolver {
-        return context?.contentResolver!!
-    }
-
-    /**
-     * Check if the application has been granted access to the camera.
-     * If not hide the progress image card view and try requesting for it.
-     *
-     */
-    private fun checkImagePermissions() {
-        if (context?.let {
-                    ContextCompat.checkSelfPermission(it, android.Manifest.permission.CAMERA)
-                } != PackageManager.PERMISSION_GRANTED) {
-
-            profile_pic_section.visibility = View.GONE
-
-            activity?.let {
-                ActivityCompat.requestPermissions(
-                        it,
-                        arrayOf(
-                                android.Manifest.permission.CAMERA,
-                                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        ),
-                        PERMISSION_REQUEST_CODE
-                )
-            }
-
-        } else {
-            profile_pic_section.visibility = View.VISIBLE
-        }
-    }
-
 }

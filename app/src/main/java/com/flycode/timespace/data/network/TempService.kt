@@ -1,7 +1,7 @@
 package com.flycode.timespace.data.network
 
-import com.flycode.musclemax_app.data.models.Response
 import com.flycode.timespace.data.models.Picture
+import com.flycode.timespace.data.models.Response
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import retrofit2.http.Multipart

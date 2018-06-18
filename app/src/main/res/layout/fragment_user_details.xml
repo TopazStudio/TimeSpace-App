@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data class="UserDetailsBinding">
+        <import type="android.view.View"/>
+        <variable
+            name="superViewModel"
+            type="com.flycode.timespace.ui.auth.signup.SignUpViewModel"/>
+    </data>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        tools:context=".ui.auth.signup.UserDetails.UserDetailsFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lets_get_a_few_details"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:gravity="start"
+                android:padding="20sp"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/sign_up_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="@string/personal_details"
+                            android:textColor="@color/colorDarkGray"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:background="@color/colorPrimaryDark"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/google_sign_in_success_more_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/google_sign_in_success_more_info"
+                        android:padding="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="0dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:visibility="@{superViewModel.uiState.googleLoginSuccess ? View.VISIBLE : View.GONE}"
+                        android:background="@color/colorLtGreen"/>
+
+                    <TextView
+                        android:id="@+id/facebook_sign_in_success_more_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/facebook_sign_in_success_more_info"
+                        android:padding="10dp"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="0dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:visibility="@{superViewModel.uiState.facebookLoginSuccess ? View.VISIBLE : View.GONE}"
+                        android:background="@color/colorLtGreen"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="20dp">
+
+                        <LinearLayout
+                            android:id="@+id/full_name_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_margin="10dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/full_name"
+                                android:src="@drawable/ic_face_24dp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:orientation="vertical">
+
+                                <Spinner
+                                    android:id="@+id/name_prefix_spinner"
+                                    android:layout_width="80dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:drawableEnd="@drawable/ic_arrow_drop_down_white_24dp"
+                                    android:background="@{superViewModel.user.name_prefix.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:baselineAligned="false">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:layout_weight="1"
+                                        android:text="@string/first_name"
+                                        android:textSize="12sp"
+                                        android:layout_marginBottom="2dp"
+                                        android:textColor="@color/colorPrimary"
+                                        android:visibility="@{superViewModel.user.first_name.empty ? View.GONE : View.VISIBLE}"/>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="@string/second_name"
+                                        android:textSize="12sp"
+                                        android:layout_marginBottom="2dp"
+                                        android:textColor="@color/colorPrimary"
+                                        android:visibility="@{superViewModel.user.second_name.empty ? View.GONE : View.VISIBLE}"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:orientation="horizontal"
+                                    android:baselineAligned="false">
+
+                                    <EditText
+                                        android:id="@+id/et_first_name"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="5dp"
+                                        android:layout_weight="1"
+                                        android:background="@{superViewModel.user.first_name.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                        android:hint="@string/first_name"
+                                        android:text="@={superViewModel.user.first_name}"
+                                        android:textSize="15sp"
+                                        android:textColor="@color/colorWhite"
+                                        android:inputType="text"
+                                        android:textColorHint="@color/colorBgDarkGray"/>
+
+                                    <EditText
+                                        android:id="@+id/et_second_name"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@{superViewModel.user.second_name.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                        android:hint="@string/second_name"
+                                        android:text="@={superViewModel.user.second_name}"
+                                        android:textSize="15sp"
+                                        android:textColor="@color/colorWhite"
+                                        android:inputType="text"
+                                        android:textColorHint="@color/colorBgDarkGray"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/surname"
+                                        android:textSize="12sp"
+                                        android:layout_marginBottom="2dp"
+                                        android:textColor="@color/colorPrimary"
+                                        android:visibility="@{superViewModel.user.surname.empty ? View.GONE : View.VISIBLE}"/>
+
+                                    <EditText
+                                        android:id="@+id/et_surname"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@{superViewModel.user.surname.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                        android:hint="@string/surname"
+                                        android:text="@={superViewModel.user.surname}"
+                                        android:textSize="15sp"
+                                        android:textColor="@color/colorWhite"
+                                        android:inputType="text"
+                                        android:textColorHint="@color/colorBgDarkGray"/>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/email_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:text="@string/email"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{superViewModel.user.email.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/email"
+                                    android:src="@drawable/ic_email_24dp" />
+
+                                <EditText
+                                    android:id="@+id/et_email"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@{superViewModel.user.email.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                    android:hint="@string/email"
+                                    android:text="@={superViewModel.user.email}"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/colorWhite"
+                                    android:inputType="textEmailAddress"
+                                    android:textColorHint="@color/colorBgDarkGray"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/password_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical"
+                            android:visibility="@{superViewModel.uiState.googleLoginSuccess || superViewModel.uiState.facebookLoginSuccess ? View.GONE : View.VISIBLE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:text="@string/password"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{superViewModel.user.password.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/password"
+                                    android:src="@drawable/ic_security_24dp"/>
+
+                                <EditText
+                                    android:id="@+id/et_password"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@{superViewModel.user.password.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                    android:hint="@string/password"
+                                    android:text="@={superViewModel.user.password}"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/colorWhite"
+                                    android:inputType="textPassword"
+                                    android:textColorHint="@color/colorBgDarkGray"/>
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:text="@string/re_type_password"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{superViewModel.user.password.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <EditText
+                                android:id="@+id/et_retype_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:background="@{superViewModel.user.password.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                android:hint="@string/re_type_password"
+                                android:textSize="15sp"
+                                android:textColor="@color/colorWhite"
+                                android:inputType="textPassword"
+                                android:textColorHint="@color/colorBgDarkGray"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/tel_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="40dp"
+                                android:text="@string/tel"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{superViewModel.user.tel.empty ? View.GONE : View.VISIBLE}"/>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="10dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/tel"
+                                    android:src="@drawable/ic_phone_24dp"/>
+
+                                <EditText
+                                    android:id="@+id/et_tell"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@{superViewModel.user.tel.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                    android:hint="@string/tel"
+                                    android:text="@={superViewModel.user.tel}"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/colorWhite"
+                                    android:inputType="text"
+                                    android:textColorHint="@color/colorBgDarkGray"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/sign_up_with_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20sp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="4dp"
+                android:visibility="@{superViewModel.uiState.googleLoginSuccess || superViewModel.uiState.facebookLoginSuccess ? View.GONE : View.VISIBLE}">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:text="@string/sign_up_with"
+                            android:textColor="@color/colorDarkGray"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            android:background="@color/colorPrimaryDark"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="20dp">
+
+                        <Button
+                            android:id="@+id/btn_facebook"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/facebook_color"
+                            android:text="@string/facebook"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorWhite"/>
+
+                        <Button
+                            android:id="@+id/btn_google"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/google_color"
+                            android:text="@string/google"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="0dp"
+                    android:text="@string/login_message"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sign_in_text_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="0dp"
+                    android:paddingLeft="10dp"
+                    android:text="@string/sign_in_text_btn"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!--NAV-->
+            <LinearLayout
+                android:id="@+id/layout_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/colorWhite"
+                android:elevation="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <Button
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="@string/back"
+                    android:textSize="20sp"
+                    android:visibility="invisible"
+                    android:drawableStart="@drawable/ic_chevron_left_24dp"
+                    android:background="@color/colorLtRed"/>
+
+                <Button
+                    android:id="@+id/btn_middle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/colorWhite"
+                    android:text="@string/skip"
+                    android:visibility="invisible"
+                    android:textSize="20sp"
+                    android:background="@color/colorPrimary"/>
+
+
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorWhite"
+                    android:text="@string/next"
+                    android:textSize="20sp"
+                    android:drawableEnd="@drawable/ic_chevron_right_24dp"
+                    android:background="@color/colorPrimary"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

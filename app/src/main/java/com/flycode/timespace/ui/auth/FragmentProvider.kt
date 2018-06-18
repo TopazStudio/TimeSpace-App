@@ -1,6 +1,6 @@
 package com.flycode.timespace.ui.auth
 
-import com.flycode.timespace.di.scope.PerFragment
+import com.flycode.timespace.di.scope.PerFragmentLevel1
 import com.flycode.timespace.ui.auth.landingPage.AuthLandingPageFragment
 import com.flycode.timespace.ui.auth.signin.SignInFragment
 import com.flycode.timespace.ui.auth.signin.SignInModule
@@ -13,15 +13,15 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentProvider {
 
-    @PerFragment
+    @PerFragmentLevel1
     @ContributesAndroidInjector()
-    internal abstract fun authLandingPageFragment(): AuthLandingPageFragment
+    abstract fun authLandingPageFragment(): AuthLandingPageFragment
 
-    @PerFragment
+    @PerFragmentLevel1
     @ContributesAndroidInjector(modules = [(SignInModule::class)])
-    internal abstract fun signInFragment(): SignInFragment
+    abstract fun signInFragment(): SignInFragment
 
-    @PerFragment
-    @ContributesAndroidInjector(modules = [(SignUpModule::class)])
-    internal abstract fun signUpFragment(): SignUpFragment
+    @PerFragmentLevel1
+    @ContributesAndroidInjector(modules = [(SignUpModule::class),(com.flycode.timespace.ui.auth.signup.FragmentProvider::class)])
+    abstract fun signUpFragment(): SignUpFragment
 }

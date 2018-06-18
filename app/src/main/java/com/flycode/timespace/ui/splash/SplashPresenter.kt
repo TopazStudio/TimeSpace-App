@@ -3,10 +3,14 @@ package com.flycode.timespace.ui.splash
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
 import android.os.CountDownTimer
+import com.facebook.AccessToken
 import com.flycode.timespace.ui.auth.AuthActivity
 import com.flycode.timespace.ui.base.BasePresenter
 import com.flycode.timespace.ui.main.MainActivity
 import com.flycode.timespace.ui.pincode.PinCodeActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+
+
 
 //import com.flycode.musclemax_app.ui.main.MainActivity
 
@@ -42,6 +46,17 @@ class SplashPresenter
      */
     private fun isUserRegistered(): Boolean {
         return utilityWrapper.defaultUser.id > 0
+    }
+
+    private fun isSignedInWithGoogle():Boolean{
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        return GoogleSignIn.getLastSignedInAccount(view!!) != null
+    }
+
+    private fun isSignedInWithFacebook() : Boolean{
+        val accessToken = AccessToken.getCurrentAccessToken()
+        return accessToken != null && !accessToken.isExpired
     }
 
     private fun isPinProtected(): Boolean{

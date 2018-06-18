@@ -5,6 +5,7 @@ import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.structure.BaseModel
+import java.io.Serializable
 
 @Table(database = (Database::class), name = "pictures" )
 data class Picture(
@@ -35,4 +36,4 @@ data class Picture(
 
         @Column
         var description : String = ""
-): BaseModel()
+): BaseModel(), Serializable

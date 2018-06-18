@@ -12,13 +12,13 @@ import dagger.android.ContributesAndroidInjector
 abstract class BindingsModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [(SplashModule::class)])
-    internal abstract fun splashActivity(): SplashActivity
+    abstract fun splashActivity(): SplashActivity
 
     @PerActivity
     @ContributesAndroidInjector(modules = [(com.flycode.timespace.ui.auth.FragmentProvider::class)])
-    internal abstract fun authActivity(): AuthActivity
+    abstract fun authActivity(): AuthActivity
 
     @PerActivity
     @ContributesAndroidInjector(modules = [(com.flycode.timespace.ui.main.FragmentProvider::class)])
-    internal abstract fun mainActivity(): MainActivity
+    abstract fun mainActivity(): MainActivity
 }

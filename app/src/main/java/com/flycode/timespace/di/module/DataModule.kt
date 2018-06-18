@@ -16,6 +16,7 @@ import com.apollographql.apollo.cache.normalized.sql.SqlNormalizedCacheFactory
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.flycode.timespace.data.Config
 import com.flycode.timespace.data.models.User
+import com.flycode.timespace.data.network.AuthService
 import com.flycode.timespace.data.network.TempService
 import com.raizlabs.android.dbflow.config.DatabaseDefinition
 import com.raizlabs.android.dbflow.config.FlowManager
@@ -206,5 +207,11 @@ open class DataModule{
     fun provideTempService(
             retrofit: Retrofit
     ): TempService = retrofit.create(TempService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAuthService(
+            retrofit: Retrofit
+    ): AuthService = retrofit.create(AuthService::class.java)
 
 }

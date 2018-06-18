@@ -8,7 +8,16 @@
         android:id="@+id/signUpFragment"
         android:name="com.flycode.timespace.ui.auth.signup.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/sign_up_fragment" />
+        tools:layout="@layout/sign_up_fragment">
+        <argument
+            android:name="UN_REGISTERED_USER"
+            app:type="serializable"
+            android:defaultValue=" "/>
+        <argument
+            android:name="EXTERNAL_AUTH_TYPE"
+            app:type="string"
+            android:defaultValue="google"/>
+    </fragment>
     <fragment
         android:id="@+id/authLandingPageFragment"
         android:name="com.flycode.timespace.ui.auth.landingPage.AuthLandingPageFragment"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/userDetailsFragment">
+
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="com.flycode.timespace.ui.auth.signup.UserDetails.UserDetailsFragment"
+        android:label="UserDetailsFragment"
+        tools:layout="@layout/fragment_user_details" />
+    <fragment
+        android:id="@+id/profilePicFragment"
+        android:name="com.flycode.timespace.ui.auth.signup.ProfilePic.ProfilePicFragment"
+        android:label="ProfilePicFragment"
+        tools:layout="@layout/fragment_profile_pic" />
+    <!--<fragment
+        android:id="@+id/monthlyViewFragment"
+        android:name="com.flycode.timespace.ui.main.timetable.monthlyview.MonthlyViewFragment"
+        android:label="MonthlyViewFragment"
+        tools:layout="@layout/fragment_monthly_view" />-->
+</navigation>

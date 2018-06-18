@@ -1,5 +1,7 @@
 package com.flycode.timespace;
 
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.facebook.stetho.Stetho
 import com.flycode.timespace.di.component.ApplicationComponent
 import com.flycode.timespace.di.component.DaggerApplicationComponent
@@ -14,6 +16,10 @@ class TimeSpaceApplication : DaggerApplication() {
         //Initialize DBFlow
         FlowManager.init(this)
         Stetho.initializeWithDefaults(this)
+
+
+        FacebookSdk.sdkInitialize(applicationContext)
+        AppEventsLogger.activateApp(this)
     }
 
     override fun applicationInjector() : AndroidInjector<DaggerApplication>? {

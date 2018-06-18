@@ -2,16 +2,24 @@
 <resources>
     <color name="colorPrimary">#81B1FF</color>
     <color name="colorPrimaryDark">#287AFF</color>
+    <color name="colorAltPrimaryDark">#077BFF</color>
     <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLtGreen">#9CF49C</color>
-    <color name="colorLtRed">#F4AC9C</color>
+    <color name="colorGreen">#3EFF3E</color>
+    <color name="colorLtRed">#FF9797</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorLtBrown">#FFC983</color>
 
     <color name="colorDarkGray">#808080</color> <!--text dark gray-->
     <color name="colorBgDarkGray">#CACACA</color> <!--Background gray-->
-    <color name="colorAltBgDarkGray">#DBDBDB</color><!--Alternate background gray-->
+    <color name="colorAltDarkGray">#DBDBDB</color><!--Alternate background gray-->
+    <color name="colorAltDarkGray2">#E6E6E6</color><!--Alternate background gray-->
+    <color name="colorAltDarkGray3">#F1F1F1</color><!--Alternate background gray-->
+
+    <color name="facebook_color">#077BFF</color>
+    <color name="google_color">#FF6161</color>
+    <color name="tweeter_color">#81B1FF</color>
 </resources>
