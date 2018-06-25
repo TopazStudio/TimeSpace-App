@@ -1,12 +1,18 @@
 package com.flycode.timespace.ui.flexible_items
 
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import com.amulyakhare.textdrawable.TextDrawable
 import com.flycode.timespace.R
 import com.flycode.timespace.data.models.Meeting
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.items.*
+import eu.davidea.flexibleadapter.items.AbstractSectionableItem
+import eu.davidea.flexibleadapter.items.IFilterable
+import eu.davidea.flexibleadapter.items.IFlexible
+import eu.davidea.flexibleadapter.items.IHolder
 import eu.davidea.viewholders.FlexibleViewHolder
 import java.io.Serializable
 
@@ -74,6 +80,12 @@ class MeetingListItem(
             payloads: MutableList<Any>?
     ) {
         holder?.tv_name?.text = meeting.name
+        holder?.tv_abbr?.setImageDrawable(
+                TextDrawable.builder().buildRound(
+                        meeting.name.toCharArray()[0].toString(),
+                        Color.BLUE
+                )
+        )
     }
 
     /**
@@ -85,7 +97,7 @@ class MeetingListItem(
             adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?
     ) : FlexibleViewHolder(view,adapter) {
 
-        val tv_abbr: TextView? = view?.findViewById(R.id.tv_abbr)
+        val tv_abbr: ImageView? = view?.findViewById(R.id.tv_abbr)
         val tv_name: TextView? = view?.findViewById(R.id.tv_name)
         val tv_members: TextView? = view?.findViewById(R.id.tv_members)
         val tv_accepted: TextView? = view?.findViewById(R.id.tv_accepted)

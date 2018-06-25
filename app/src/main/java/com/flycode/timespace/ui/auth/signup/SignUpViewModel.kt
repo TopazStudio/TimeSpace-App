@@ -12,8 +12,7 @@ open class SignUpViewModel
     var imagePath: String? = null
     var imageBitmap: Bitmap? = null
     var doImageSave: Boolean = false
-//    var googleLoginSuccess : Boolean = UiState.googleLoginSuccess
-//    var facebookLoginSuccess : Boolean = UiState.facebookLoginSuccess
+    var signedUp: Boolean = false
     val uiState = UiState()
 
     class UiState : BaseObservable(){

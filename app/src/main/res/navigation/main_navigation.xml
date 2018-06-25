@@ -9,4 +9,12 @@
         android:name="com.flycode.timespace.ui.main.timetable.TimeTableFragment"
         android:label="time_table_fragment"
         tools:layout="@layout/time_table_fragment" />
+
+    <fragment
+        android:id="@+id/groupsOverviewFragment"
+        android:name="com.flycode.timespace.ui.auth.orientation.OrientationFragment"
+        android:label="My Groups"
+        tools:layout="@layout/fragment_orientation">
+        <deepLink app:uri="timespace://groups/orientation"/>
+    </fragment>
 </navigation>

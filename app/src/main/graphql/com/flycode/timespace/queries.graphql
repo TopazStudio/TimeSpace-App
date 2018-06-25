@@ -7,3 +7,72 @@ query viewer{
         status
     }
 }
+
+query searchUser($type: String, $property: String, $term: String){
+    searchUser(type: $type, property: $property, term: $term){
+        took
+        totalHits
+        maxScore
+        hits{
+            id
+            first_name
+            second_name
+            surname
+            status
+            created_at
+            pictures{
+                remote_location
+            }
+        }
+    }
+}
+query searchOrganization($type: String, $property: String, $term: String){
+    searchOrganization(type: $type, property: $property, term: $term){
+        took
+        totalHits
+        maxScore
+        hits{
+            id
+            name
+            description
+            created_at
+            pictures{
+                remote_location
+            }
+        }
+    }
+}
+query searchGroup($type: String, $property: String, $term: String){
+    searchGroup(type: $type, property: $property, term: $term){
+        took
+        totalHits
+        maxScore
+        hits{
+            id
+            name
+            description
+            created_at
+            organization{
+                id
+                name
+            }
+            pictures{
+                remote_location
+            }
+        }
+    }
+}
+
+query getOrganizationGroups($id: ID){
+    organization(method: GET_ONE, id: $id){
+        groups{
+            id
+            name
+            description
+            created_at
+            pictures{
+              remote_location
+            }
+        }
+    }
+}

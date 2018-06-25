@@ -34,7 +34,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${rootProject.kotlin_version}"
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
@@ -109,7 +109,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:commons:0.9.5.0'
 //    implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
     implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
-    implementation 'com.libRG:customtextview:1.4'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.github.GoodieBag:PinView:v1.3'
 
     //Calendar
@@ -121,4 +121,8 @@ dependencies {
     implementation 'eu.davidea:flexible-adapter-ui:1.0.0-b4'
     implementation 'eu.davidea:flexible-adapter-livedata:1.0.0-b2'
     implementation 'eu.davidea:flexible-adapter-databinding:1.0.0-b3'
+
+    //ANIMATION
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 }

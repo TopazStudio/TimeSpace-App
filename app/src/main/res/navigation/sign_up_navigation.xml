@@ -14,9 +14,4 @@
         android:name="com.flycode.timespace.ui.auth.signup.ProfilePic.ProfilePicFragment"
         android:label="ProfilePicFragment"
         tools:layout="@layout/fragment_profile_pic" />
-    <!--<fragment
-        android:id="@+id/monthlyViewFragment"
-        android:name="com.flycode.timespace.ui.main.timetable.monthlyview.MonthlyViewFragment"
-        android:label="MonthlyViewFragment"
-        tools:layout="@layout/fragment_monthly_view" />-->
 </navigation>

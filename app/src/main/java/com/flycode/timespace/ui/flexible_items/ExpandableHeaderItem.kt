@@ -9,10 +9,8 @@ import com.flycode.timespace.R
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractExpandableHeaderItem
 import eu.davidea.flexibleadapter.items.IFlexible
-import eu.davidea.flexibleadapter.items.IHeader
 import eu.davidea.flexibleadapter.items.ISectionable
 import eu.davidea.viewholders.ExpandableViewHolder
-import eu.davidea.viewholders.FlexibleViewHolder
 
 class ExpandableHeaderItem(
         var id: Int,
@@ -25,9 +23,10 @@ class ExpandableHeaderItem(
     init {
         mHidden = false
         mDraggable = false
-        mSelectable = true
-
+        mSelectable = false
+        mExpanded = true
     }
+    var listener : ExpandableHeaderItemListener? = null
 
     override fun bindViewHolder(
             adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
@@ -36,6 +35,10 @@ class ExpandableHeaderItem(
             payloads: MutableList<Any>?) {
         holder?.tv_name?.text = name
         holder?.tv_entries?.text = entries.toString()
+        holder?.main_view?.setOnClickListener {
+            if (mExpanded) listener?.onCollapse(position)
+            else listener?.onExpand(position)
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -54,7 +57,6 @@ class ExpandableHeaderItem(
     override fun getLayoutRes(): Int = R.layout.daily_list_items_header
 
     override fun hashCode() : Int = id.hashCode()
-
     /**
      * The ViewHolder used by this item.
      *
@@ -64,9 +66,15 @@ class ExpandableHeaderItem(
             adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?
     ) : ExpandableViewHolder(view,adapter,true) {
         val tv_name: TextView? = view?.findViewById(R.id.tv_name)
+        val main_view: LinearLayout? = view?.findViewById(R.id.main_view)
         val expand_image_view: ImageView? = view?.findViewById(R.id.expand_image_view)
         val view_all: LinearLayout? = view?.findViewById(R.id.view_all)
         val tv_entries: TextView? = view?.findViewById(R.id.tv_entries)
 
+    }
+
+    interface ExpandableHeaderItemListener{
+        fun onExpand(position: Int)
+        fun onCollapse(position: Int)
     }
 }

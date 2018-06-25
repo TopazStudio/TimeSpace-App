@@ -17,6 +17,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.flycode.timespace.data.Config
 import com.flycode.timespace.data.models.User
 import com.flycode.timespace.data.network.AuthService
+import com.flycode.timespace.data.network.GroupService
 import com.flycode.timespace.data.network.TempService
 import com.raizlabs.android.dbflow.config.DatabaseDefinition
 import com.raizlabs.android.dbflow.config.FlowManager
@@ -213,5 +214,12 @@ open class DataModule{
     fun provideAuthService(
             retrofit: Retrofit
     ): AuthService = retrofit.create(AuthService::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideGroupService(
+            retrofit: Retrofit
+    ): GroupService = retrofit.create(GroupService::class.java)
 
 }

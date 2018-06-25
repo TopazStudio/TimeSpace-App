@@ -1,11 +1,14 @@
 package com.flycode.timespace.ui.auth.signup
 
+import android.content.SharedPreferences
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloMutationCall
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.flycode.musclemax_app.util.FileUtils
+import com.flycode.timespace.LoginMutation
 import com.flycode.timespace.RegisterUserMutation
 import com.flycode.timespace.RegisterUserWithPicturesMutation
+import com.flycode.timespace.data.models.LoginPayload
 import com.flycode.timespace.data.models.Picture
 import com.flycode.timespace.data.models.Response
 import com.flycode.timespace.data.models.User
@@ -25,14 +28,15 @@ import java.io.File
 
 class SignUpPresenter(
         val tempService: TempService,
-        val apolloClient: ApolloClient
+        val apolloClient: ApolloClient,
+        val sharedPreferences: SharedPreferences
 ) : BasePresenter<SignUpFragment, SignUpPresenter, SignUpViewModel>(),
         SignUpContract.SignUpPresenter<SignUpFragment>{
 
     override fun onFinish() {
         view?.let{view ->
             view.showLoading()
-            if (viewModel.doImageSave)
+            if (viewModel.doImageSave && !viewModel.signedUp) {
                 compositeDisposable.add(
                         saveImageLocally() //SAVE PROFILE PIC LOCALLY
                                 .flatMap {
@@ -67,15 +71,15 @@ class SignUpPresenter(
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe ({
-                                    view.hideLoading()
                                     if (it == true) {
-                                        view.showMessage("Successfully Registered")
-                                        view.navigateToActivity(view.context, MainActivity::class.java)
+                                        viewModel.signedUp = true
+                                        login() //After signing up. Login user
                                     } else {
                                         view.showError("Sorry, something went wrong. Please try again.")
                                     }
                                 },{
                                     view.hideLoading()
+                                    viewModel.signedUp = false
                                     if (it.message != null){
                                         view.showError(message = it.message.toString())
                                     }else{
@@ -83,39 +87,41 @@ class SignUpPresenter(
                                     }
                                 })
                 )
-
-            else
-            compositeDisposable.add(
-                    Rx2Apollo.from(registerUser())
-                            .flatMap {
-                                if (it.data()?.user() == null){
-                                    Observable.error(Throwable(it.errors()[0].message()))
-                                }else{
-                                    val user : User = Gson().fromJson(Gson().toJson(it.data()?.user()),User::class.java)
-                                    user.password = viewModel.user.password
-                                    saveUserLocally(user) //SAVE THE USER TOGETHER WITH PICTURES LOCALLY
+            } else if(viewModel.signedUp){
+                login() //IF ALL READY SIGNED UP. JUST SIGN IN
+            }  else {
+                compositeDisposable.add(
+                        Rx2Apollo.from(registerUser())
+                                .flatMap {
+                                    if (it.data()?.user() == null){
+                                        Observable.error(Throwable(it.errors()[0].message()))
+                                    }else{
+                                        val user : User = Gson().fromJson(Gson().toJson(it.data()?.user()),User::class.java)
+                                        user.password = viewModel.user.password
+                                        saveUserLocally(user) //SAVE THE USER TOGETHER WITH PICTURES LOCALLY
+                                    }
                                 }
-                            }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe ({
-                                view.hideLoading()
-                                if (it == true) {
-                                    view.showMessage("Successfully Registered")
-                                    view.navigateToActivity(view.context, MainActivity::class.java)
-                                }
-                                else {
-                                    view.showError("Sorry, something went wrong. Please try again.")
-                                }
-                            },{
-                                view.hideLoading()
-                                if (it.message != null){
-                                    view.showError(message = it.message.toString())
-                                }else{
-                                    view.showError("Something went wrong. Please try again.")
-                                }
-                            })
-            )
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe ({
+                                    if (it == true) {
+                                        viewModel.signedUp = true
+                                        login()
+                                    }
+                                    else {
+                                        view.showError("Sorry, something went wrong. Please try again.")
+                                    }
+                                },{
+                                    view.hideLoading()
+                                    viewModel.signedUp = false
+                                    if (it.message != null){
+                                        view.showError(message = it.message.toString())
+                                    }else{
+                                        view.showError("Something went wrong. Please try again.")
+                                    }
+                                })
+                )
+            }
         }
     }
 
@@ -172,4 +178,65 @@ class SignUpPresenter(
         return Observable.just(user.save())
     }
 
+    private fun loginUser(): ApolloMutationCall<LoginMutation.Data> {
+        return apolloClient.mutate(
+                LoginMutation.builder()
+                        .email(viewModel.user.email)
+                        .password(viewModel.user.password)
+                        .build()
+        )
+    }
+
+    private fun login(){
+        view?.let { view ->
+            compositeDisposable.add(
+                    Rx2Apollo.from(loginUser())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe ({
+                                it?.data()?.let {it1 ->
+                                    val loginPayload : LoginPayload = Gson()
+                                            .fromJson(
+                                                    Gson().toJson(it1.login()!!)
+                                                    , LoginPayload::class.java
+                                            )
+                                    autoRegister(loginPayload)
+                                }
+                            },{
+                                view.hideLoading()
+                                if (it.message != null){
+                                    view.showError(message = it.message.toString())
+                                }else{
+                                    view.showError("Something went wrong. Please try again.")
+                                }
+                            })
+            )
+        }
+    }
+
+    private fun autoRegister(loginPayload: LoginPayload){
+        Observable.create<Boolean> {
+            sharedPreferences.edit().putString("token",loginPayload.token).apply()
+            if (loginPayload.user.save()){
+                it.onNext(true)
+            }else it.onError(Throwable("Something Went Wrong"))
+        }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({
+            view?.hideLoading()
+            view?.showMessage("All Done!")
+
+            //Deep link to orient user
+            view?.navigateToActivity(view?.context, MainActivity::class.java)
+
+        },{
+            view?.hideLoading()
+            if (it.message != null){
+                view?.showError(message = it.message.toString())
+            }else{
+                view?.showError("Something went wrong. Please try again.")
+            }
+        })
+    }
 }

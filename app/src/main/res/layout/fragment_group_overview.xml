@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data class="OrientationBindings">
+        <import type="android.view.View"/>
+        <import type="java.lang.String"/>
+        <variable
+            name="viewModel"
+            type="com.flycode.timespace.ui.main.groups.groupsOverview.GroupsOverviewViewModel"/>
+    </data>
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBgDarkGray"
+        tools:context=".ui.auth.appInvites.OrientationFragment">
+
+        <!--CHOICES DETAILS-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBgDarkGray"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </FrameLayout>
+
+        <!--<android.support.v4.widget.NestedScrollView
+            android:id="@+id/details_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.uiState.isSearchOpen? View.GONE : View.VISIBLE}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="3dp"
+                    app:cardCornerRadius="4dp"
+                    android:visibility="visible"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <Button
+                        android:id="@+id/btn_invitation_link"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/paste_an_invitation_link"
+                        android:textColor="@color/colorWhite"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:minHeight="200dp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="3dp"
+                    app:cardCornerRadius="4dp"
+                    android:visibility="visible"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                        &lt;!&ndash;CARD HEADER&ndash;&gt;
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="@string/joined"
+                                android:textColor="@color/colorDarkGray"
+                                android:textStyle="bold"
+                                android:textSize="20sp"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="5dp"
+                                android:background="@color/colorPrimaryDark"/>
+                        </LinearLayout>
+
+                        &lt;!&ndash;CARD CONTENT&ndash;&gt;
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/joined_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:minHeight="200dp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardElevation="3dp"
+                    app:cardCornerRadius="4dp"
+                    android:visibility="visible"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                        &lt;!&ndash;CARD HEADER&ndash;&gt;
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:text="@string/suggested"
+                                android:textColor="@color/colorDarkGray"
+                                android:textStyle="bold"
+                                android:textSize="20sp"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="5dp"
+                                android:background="@color/colorPrimaryDark"/>
+                        </LinearLayout>
+
+                        &lt;!&ndash;CARD CONTENT&ndash;&gt;
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/suggested_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>-->
+
+        <!--SEARCH RESULTS-->
+        <LinearLayout
+            android:id="@+id/search_results"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBgDarkGray"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.uiState.isSearchOpen? View.VISIBLE : View.GONE}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
+                android:id="@+id/search_loading_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:visibility="@{viewModel.uiState.isSearchLoading? View.VISIBLE : View.GONE}">
+                <ProgressBar
+                    android:id="@+id/results_progress_bar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(viewModel.uiState.resultCount)}"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_results"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/search_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorBgDarkGray"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:background="@color/colorPrimary"
+            android:elevation="6dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.uiState.isSearchHintOpen ? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:id="@+id/tx_search_hint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/join_your_organizations_and_groups"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="start"
+                    android:padding="10sp"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed"/>
+
+                <ImageButton
+                    android:id="@+id/btn_close_search_hint"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:paddingEnd="20dp"
+                    android:contentDescription="@string/navigation_close"
+                    android:background="@color/colorPrimary"
+                    android:src="@drawable/ic_close_white_24dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/search"
+                    android:padding="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_gravity="top"
+                    android:gravity="center_vertical"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorDarkGray"
+                    android:inputType="text"/>
+                <ImageButton
+                    android:id="@+id/btn_close_search"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/navigation_close"
+                    android:background="@color/colorWhite"
+                    android:padding="10dp"
+                    android:src="@{viewModel.uiState.isSearchOpen? @drawable/ic_close_black_24dp : @drawable/ic_search_black_24dp}"/>
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

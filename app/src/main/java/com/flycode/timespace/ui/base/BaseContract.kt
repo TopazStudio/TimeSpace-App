@@ -16,7 +16,7 @@ interface BaseContract {
         /**
          * Navigate to another activity for results.
          */
-        fun openForResult(next: Class<*>, requestCode: Int, data: Bundle?)
+        fun openForResult(next: Class<*>, requestCode: Int, data: Bundle? = null)
 
         /**
          * Show loading animation. Loading animation can be customized

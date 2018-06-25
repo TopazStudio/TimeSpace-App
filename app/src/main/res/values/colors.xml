@@ -2,8 +2,11 @@
 <resources>
     <color name="colorPrimary">#81B1FF</color>
     <color name="colorPrimaryDark">#287AFF</color>
+    <color name="colorPrimaryDark2">#1e5cbf</color>
     <color name="colorAltPrimaryDark">#077BFF</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#81B1FF</color>
+
+    <color name="colorTransparentWhite">#d0ffffff</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
@@ -13,6 +16,7 @@
     <color name="colorRed">#FF0000</color>
     <color name="colorLtBrown">#FFC983</color>
 
+    <color name="colorDarkerGray">#666666</color> <!--text dark gray-->
     <color name="colorDarkGray">#808080</color> <!--text dark gray-->
     <color name="colorBgDarkGray">#CACACA</color> <!--Background gray-->
     <color name="colorAltDarkGray">#DBDBDB</color><!--Alternate background gray-->
