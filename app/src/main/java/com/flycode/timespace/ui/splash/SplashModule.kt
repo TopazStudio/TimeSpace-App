@@ -1,6 +1,8 @@
 package com.flycode.timespace.ui.splash
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
+import com.flycode.timespace.di.scope.PerActivity
 import dagger.Module
 import dagger.Provides
 
@@ -8,11 +10,17 @@ import dagger.Provides
 class SplashModule{
 
     @Provides
-    fun providePresenter(): SplashPresenter{
-        return SplashPresenter()
+    @PerActivity
+    fun providePresenter(
+            sharedPreferences: SharedPreferences
+    ): SplashPresenter{
+        return SplashPresenter(
+                sharedPreferences = sharedPreferences
+        )
     }
 
     @Provides
+    @PerActivity
     fun provideViewModel(
             splashActivity : SplashActivity,
             splashPresenter: SplashPresenter

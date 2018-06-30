@@ -1,11 +1,11 @@
 package com.flycode.timespace.ui.flexible_items
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.amulyakhare.textdrawable.TextDrawable
 import com.amulyakhare.textdrawable.util.ColorGenerator
@@ -23,7 +23,6 @@ import java.io.Serializable
 class ContactListItem(
         header : AbstractExpandableHeaderItem<*, ISectionable<*, *>>,
         var user: User,
-        var state: String = "NOT_MEMBER",
         var context : Context? = null
 ) : AbstractSectionableItem<ContactListItem.MyViewHolder, AbstractExpandableHeaderItem<*, ISectionable<*, *>>>(header),
         IFilterable<Serializable>,
@@ -88,12 +87,27 @@ class ContactListItem(
     ) {
         this.position = position
         holder?.tv_name?.text = user.first_name
-        holder?.tv_email?.text = user.email
-        holder?.tv_tel?.text = user.tel
+
+        val email = user.email.split(";").filter { !it.isEmpty() }
+        holder?.tv_email?.text = email
+                .reduce { acc, s ->
+                    acc + "\n" + s
+                }
+
+        try {
+
+            val tel = user.tel.split(";").filter { !it.isEmpty() }
+            holder?.tv_tel?.text = tel
+                    .reduce { acc, s ->
+                        acc + "\n" + s
+                    }
+        }catch (e: Exception){
+            holder?.tv_tel?.text = context?.getString(R.string.no_number)
+        }
 
         if (!user.pictures.isEmpty())
             Picasso.get()
-                    .load(user.pictures[0].remote_location)
+                    .load(user.pictures[0].local_location)
                     .into(holder?.im_picture)
         else holder?.im_picture?.setImageDrawable(
                 TextDrawable.builder().buildRound(
@@ -106,18 +120,30 @@ class ContactListItem(
             listener?.onContactClicked(user)
         }
 
-        when(state){
-            "NOT_MEMBER" -> {
+        when(user._tag){
+            "NOT_INVITED" -> {
                 holder?.btn_follow_or_invite?.text = context?.resources?.getString(R.string.invite)
                 holder?.btn_follow_or_invite?.background = context?.resources?.getDrawable(R.drawable.primary_button)
+                holder?.btn_follow_or_invite?.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        null,
+                        null,
+                        null
+                )
                 holder?.btn_follow_or_invite?.setOnClickListener{
                     listener?.onInvite(this,holder,position)
                 }
             }
 
-            "MEMBER" -> {
+            "NOT_FOLLOWING" -> {
                 holder?.btn_follow_or_invite?.text = context?.resources?.getString(R.string.follow)
                 holder?.btn_follow_or_invite?.background = context?.resources?.getDrawable(R.drawable.primary_button)
+                holder?.btn_follow_or_invite?.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        null,
+                        null,
+                        null
+                )
                 holder?.btn_follow_or_invite?.setOnClickListener{
                     listener?.onFollow(this,holder,position)
                 }
@@ -163,7 +189,7 @@ class ContactListItem(
             adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?
     ) : FlexibleViewHolder(view,adapter) {
 
-        val main_view: LinearLayout? = view?.findViewById(R.id.main_view)
+        val main_view: CardView? = view?.findViewById(R.id.main_view)
         val im_picture: ImageView? = view?.findViewById(R.id.im_picture)
         val tv_name: TextView? = view?.findViewById(R.id.tv_name)
         val tv_tel: TextView? = view?.findViewById(R.id.tv_tel)

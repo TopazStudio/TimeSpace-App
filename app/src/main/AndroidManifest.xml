@@ -17,6 +17,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -33,24 +34,30 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
         <!-- SPLASH ACTIVITY -->
         <activity android:name=".ui.splash.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- BASE NAV ACTIVITY -->
         <activity android:name=".ui.main.MainActivity">
             <intent-filter android:label="My Groups">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <!-- Accepts URIs that begin with "timespace://groups” -->
-                <data android:scheme="timespace"
-                    android:host="groups" />
+                <data
+                    android:host="groups"
+                    android:scheme="timespace" />
             </intent-filter>
         </activity>
 
@@ -68,17 +75,14 @@
         <!-- APP INVITES -->
         <activity
             android:name=".ui.appInvites.AppInvitesActivity"
-            android:label="Find friends and invite new ones">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="Find friends and invite new ones"
+            android:windowSoftInputMode="stateHidden"></activity>
 
         <!-- FACEBOOK -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -95,6 +99,18 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".services.userService.UserService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".broadcastReceivers.ServiceStartedReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".ui.user.userView.UserViewActivity"></activity>
     </application>
 
 </manifest>

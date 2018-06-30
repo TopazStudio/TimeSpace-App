@@ -7,5 +7,5 @@ package com.flycode.timespace.data.db
 )
 object Database {
     const val NAME = "TimeSpace"
-    const val VERSION = 5
+    const val VERSION = 6
 }

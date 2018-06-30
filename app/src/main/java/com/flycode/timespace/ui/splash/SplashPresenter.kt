@@ -2,6 +2,7 @@ package com.flycode.timespace.ui.splash
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
+import android.content.SharedPreferences
 import android.os.CountDownTimer
 import com.facebook.AccessToken
 import com.flycode.timespace.ui.auth.AuthActivity
@@ -14,8 +15,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 //import com.flycode.musclemax_app.ui.main.MainActivity
 
-class SplashPresenter
-    : BasePresenter<SplashActivity,SplashPresenter,SplashViewModel>()
+class SplashPresenter(
+        val sharedPreferences: SharedPreferences
+) : BasePresenter<SplashActivity,SplashPresenter,SplashViewModel>()
         , SplashContract.SplashPresenter<SplashActivity> {
 
     val WAITING_TIME: Long = 1000
@@ -30,12 +32,14 @@ class SplashPresenter
                 /**
                  * If no registered user send to authentication activity
                  * */
-                if (!isUserRegistered()) //Check if user is not registered
-                    view?.navigateToActivity(to = AuthActivity::class.java, from = null)
-                else if(isPinProtected())
-                    view?.navigateToActivity(to = PinCodeActivity::class.java, from = null)
-                else
-                    view?.navigateToActivity(to = MainActivity::class.java, from = null)
+
+                when{
+                    isUserRegistered() -> view?.navigateToActivity(to = MainActivity::class.java, from = null)
+
+                    isPinProtected() -> view?.navigateToActivity(to = PinCodeActivity::class.java, from = null)
+
+                    else -> view?.navigateToActivity(to = AuthActivity::class.java, from = null)
+                }
             }
         }.start()
     }
@@ -60,6 +64,6 @@ class SplashPresenter
     }
 
     private fun isPinProtected(): Boolean{
-        return true
+        return sharedPreferences.getBoolean("pin_protected",false)
     }
 }

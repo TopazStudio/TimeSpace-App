@@ -9,12 +9,17 @@ import androidx.navigation.ui.setupWithNavController
 import com.flycode.timespace.R
 import com.flycode.timespace.databinding.BaseActivityBinding
 import com.flycode.timespace.databinding.BaseNavDrawerHeadingBindings
-import dagger.android.support.DaggerAppCompatActivity
+import com.flycode.timespace.ui.base.BaseActivity
+import com.flycode.timespace.ui.base.BaseServiceContract
+import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(){
+class MainActivity
+    : BaseActivity<MainActivity, MainPresenter, MainViewModel>()
+        , MainContract.MainActivity, BaseServiceContract.ServiceListener {
 
-    //Todo: find a way to make non null completely.
+    @Inject
+    override lateinit var viewModel: MainViewModel
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var baseActivityBinding : BaseActivityBinding
 
@@ -70,4 +75,17 @@ class MainActivity : DaggerAppCompatActivity(){
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onError(error: String) {
+        showError(error)
+    }
+
+    override fun onSuccess(message: String) {
+        showMessage(message)
+    }
+
+    override fun onFinish(success: Boolean, data: Bundle) {
+        if (success) showMessage("Successful")
+    }
+
 }

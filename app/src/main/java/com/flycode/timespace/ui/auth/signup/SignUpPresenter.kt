@@ -217,6 +217,7 @@ class SignUpPresenter(
     private fun autoRegister(loginPayload: LoginPayload){
         Observable.create<Boolean> {
             sharedPreferences.edit().putString("token",loginPayload.token).apply()
+            loginPayload.user._tag = "default_user"
             if (loginPayload.user.save()){
                 it.onNext(true)
             }else it.onError(Throwable("Something Went Wrong"))

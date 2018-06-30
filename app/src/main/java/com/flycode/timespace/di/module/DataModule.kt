@@ -16,9 +16,14 @@ import com.apollographql.apollo.cache.normalized.sql.SqlNormalizedCacheFactory
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.flycode.timespace.data.Config
 import com.flycode.timespace.data.models.User
+import com.flycode.timespace.data.models.User_Table
+import com.flycode.timespace.data.network.AppInvitesService
 import com.flycode.timespace.data.network.AuthService
 import com.flycode.timespace.data.network.GroupService
 import com.flycode.timespace.data.network.TempService
+import com.pusher.client.Pusher
+import com.pusher.client.PusherOptions
+import com.pusher.client.util.HttpAuthorizer
 import com.raizlabs.android.dbflow.config.DatabaseDefinition
 import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.sql.language.SQLite
@@ -31,6 +36,7 @@ import org.jetbrains.annotations.NotNull
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -50,6 +56,7 @@ open class DataModule{
     fun provideDefaultUser(): User {
         val user = SQLite.select()
                 .from(User::class.java)
+                .where(User_Table._tag.eq("default_user"))
                 .querySingle()
 
         return user ?: User()
@@ -126,6 +133,9 @@ open class DataModule{
                 //.addNetworkInterceptor(stethoInterceptor)
                 //.addNetworkInterceptor(networkInterceptor)
                 .addNetworkInterceptor(StethoInterceptor())
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
                 .build()
     }
 
@@ -141,11 +151,20 @@ open class DataModule{
 
             val builder = request
                     .newBuilder()
-                    .header("Authorization", sharedPreferences.getString("token", null))
+                    .header("Authorization", "Bearer " +  sharedPreferences.getString("token", null))
 
             request = builder.build()
         }
-        chain.proceed(request)
+
+        val response = chain.proceed(request)
+
+        if (response.header("Authorization",null) != null){
+            sharedPreferences.edit().putString(
+                    "token",
+                    response.header("Authorization",null)
+            )
+        }
+        response
     }
 
     @Named("network_interceptor")
@@ -158,6 +177,11 @@ open class DataModule{
         val builder = request
                 .newBuilder()
                 .header("X-Requested-With","XMLHttpRequest")
+
+        //Add socket id for push notifications
+        if (!sharedPreferences.getString("socket-id",null).isNullOrEmpty()) {
+            builder.header("X-Socket-ID",sharedPreferences.getString("socket-id", null))
+        }
 
         request = builder.build()
         chain.proceed(request)
@@ -221,5 +245,40 @@ open class DataModule{
     fun provideGroupService(
             retrofit: Retrofit
     ): GroupService = retrofit.create(GroupService::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideAppInvitesService(
+            retrofit: Retrofit
+    ): AppInvitesService = retrofit.create(AppInvitesService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePusher(
+            sharedPreferences: SharedPreferences
+    ) : Pusher{
+        val options  = PusherOptions()
+
+        val authorizer =  HttpAuthorizer("${Config.BACKEND_ENDPOINT}broadcasting/auth").apply {
+            //SET JWT
+            this.setHeaders(HashMap<String,String>().apply {
+                if (!sharedPreferences.getString("token",null).isNullOrEmpty()) {
+                    this["Authorization"] = "Bearer " + sharedPreferences.getString("token",null)
+                }
+                this["Accept"] = "application/json"
+                this["Content-Type"] = "application/x-www-form-urlencoded"
+            })
+
+        }
+
+        options.apply {
+//            this.isEncrypted = true
+            this.setCluster(Config.PUSHER_APP_CLUSTER)
+            this.authorizer = authorizer
+        }
+
+        return Pusher(Config.PUSHER_APP_KEY, options)
+    }
 
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@color/colorWhite"
+    android:gravity="center_horizontal"
+    android:padding="5dp"
+    android:weightSum="100"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/app_name"
+        android:layout_gravity="start"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/you_have"
+                android:textColor="@color/colorBlack"/>
+
+            <TextView
+                android:id="@+id/followers_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_4"
+                android:textColor="@color/colorRed"/>
+
+            <TextView
+                android:id="@+id/new_followers_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/new_followers"
+                android:textColor="@color/colorBlack"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/first_follower_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:textSize="13sp"
+                android:text="Erick Njiru"
+                android:textColor="@color/colorDarkGray"/>
+
+            <TextView
+                android:id="@+id/other_followers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:text="and 3 others"
+                android:textColor="@color/colorDarkGray"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

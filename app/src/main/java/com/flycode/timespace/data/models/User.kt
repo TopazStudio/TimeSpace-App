@@ -81,6 +81,14 @@ class User : BaseObservable(),Serializable{
             notifyChange()
         }
 
+    @field: [SerializedName("_tag") Column(name = "_tag")]
+    @get: Bindable
+    var _tag: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
+
     // RELATIONSHIPS
         var pictures : MutableList<Picture> = ArrayList()
 

@@ -101,4 +101,14 @@
     <string name="invite">INVITE</string>
     <string name="following">FOLLOWING</string>
     <string name="invited">INVITED</string>
+    <string name="try_again">TRY AGAIN</string>
+    <string name="invite_all">Invite All</string>
+    <string name="no_number">No number</string>
+    <string name="_1">1</string>
+    <string name="you_have">You have</string>
+    <string name="_4">4</string>
+    <string name="new_followers">new followers</string>
+    <string name="new_follower">new follower</string>
+    <string name="new_follower_notification_channel">1</string>
+    <string name="new_follower_notification_id">1</string>
 </resources>

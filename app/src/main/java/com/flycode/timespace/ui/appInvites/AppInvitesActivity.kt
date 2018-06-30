@@ -21,6 +21,8 @@ class AppInvitesActivity
     @Inject
     lateinit var appInvitesViewPager: AppInvitesViewPager
 
+    var listeners: ArrayList<AppInvitesFragmentInterface> = ArrayList<AppInvitesFragmentInterface>()
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_app_invites)
@@ -32,10 +34,18 @@ class AppInvitesActivity
 
     private fun init(){
         setupViewPager()
+        fab_done.setOnClickListener {
+            listeners.forEach {
+                it.onFinished()
+            }
+            presenter.onFinished()
+        }
     }
 
     private fun setupViewPager() {
-        appInvitesViewPager.addFragment(ContactInvitesFragment())
+        appInvitesViewPager.addFragment(ContactInvitesFragment().apply {
+            this@AppInvitesActivity.listeners.add(this)
+        })
         appInvitesViewPager.addFragment(FacebookInvitesFragment())
         appInvitesViewPager.addFragment(GoogleInvitesFragment())
         appInvitesViewPager.addFragment(SelfInvitesFragment())
@@ -67,6 +77,10 @@ class AppInvitesActivity
         tab_layout.getTabAt(3)?.setIcon(R.drawable.ic_edit_24dp)
         tab_layout.getTabAt(3)?.text = "Personal"
         tab_layout.getTabAt(3)?.customView = tabFour
+    }
+
+    interface AppInvitesFragmentInterface{
+        fun onFinished()
     }
 
 }

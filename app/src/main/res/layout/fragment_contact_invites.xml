@@ -11,7 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBgDarkGray"
+        android:background="@color/colorAltDarkGray"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ui.appInvites.contactInvites.ContactInvitesFragment"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -21,6 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="3dp"
+            android:layout_marginBottom="2dp"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:orientation="horizontal">
             <EditText
                 android:id="@+id/et_search"
@@ -51,13 +54,13 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorWhite"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:visibility="@{viewModel.uiState.contactPermission? View.VISIBLE : View.GONE}"/>
 
@@ -87,6 +90,59 @@
                     android:text="@string/btn_contact_permission"
                     android:background="@drawable/primary_button"
                     android:textColor="@color/colorWhite"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/colorTransparentWhite"
+                android:gravity="center"
+                android:visibility="@{viewModel.uiState.errorOccured? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:padding="20dp"
+                    android:text="Something went wrong. Please try again."
+                    android:textStyle="bold"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="20sp"
+                    android:gravity="center"/>
+
+                <Button
+                    android:id="@+id/btn_retry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/try_again"
+                    android:background="@drawable/primary_button"
+                    android:textColor="@color/colorWhite"/>
+
+                <Button
+                    android:id="@+id/btn_skip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:text="@string/skip"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/colorBlack"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/colorTransparentWhite"
+                android:gravity="center"
+                android:visibility="@{viewModel.uiState.isContactsLoading? View.VISIBLE : View.GONE}">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
