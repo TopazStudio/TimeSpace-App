@@ -1,0 +1,16 @@
+mutation addClazz(
+    $clazz: Clazz_Input!,
+    $time: Time_Input!,
+    $location: Location_Input!,
+    $taggeds: [Tagged_Input!]
+){
+    clazz(
+        method: ADD,
+        clazz: $clazz,
+        time: $time,
+        location: $location,
+        taggeds: $taggeds
+    ){
+        id
+    }
+}

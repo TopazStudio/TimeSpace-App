@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,15 +16,36 @@
         android:background="@color/colorPrimaryDark"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <include layout="@layout/view_week_label"/>
-
-        <com.test.tudou.library.WeekPager.view.WeekRecyclerView
-            android:id="@+id/week_recycler_view"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:clipToPadding="false"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:scrollbars="none"/>
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimaryDark"
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax"
+                android:orientation="vertical"
+                android:layout_marginTop="?attr/actionBarSize">
+
+                <include layout="@layout/view_week_label"/>
+
+                <com.test.tudou.library.WeekPager.view.WeekRecyclerView
+                    android:id="@+id/week_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:clipToPadding="false"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    android:scrollbars="none"/>
+            </LinearLayout>
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
 
         <TextView
             android:id="@+id/text_day_label"
@@ -37,8 +59,8 @@
     <com.test.tudou.library.WeekPager.view.WeekDayViewPager
         android:id="@+id/week_day_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="@color/colorBgDarkGray"/>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

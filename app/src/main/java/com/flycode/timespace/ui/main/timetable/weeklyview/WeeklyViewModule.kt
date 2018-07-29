@@ -1,18 +1,26 @@
 package com.flycode.timespace.ui.main.timetable.weeklyview
 
 import android.arch.lifecycle.ViewModelProviders
+import com.apollographql.apollo.ApolloClient
 import com.flycode.timespace.di.scope.PerFragmentLevel2
+import com.flycode.timespace.ui.flexible_items.PlainHeaderItem
+import com.flycode.timespace.ui.main.timetable.TimeTableViewModel
 import dagger.Module
 import dagger.Provides
+import eu.davidea.flexibleadapter.FlexibleAdapter
 
 @Module
 class WeeklyViewModule {
     @Provides
     @PerFragmentLevel2
     fun providePresenter(
-
+            apolloClient: ApolloClient,
+            superViewModel: TimeTableViewModel
     ): WeeklyViewPresenter
-            = WeeklyViewPresenter()
+            = WeeklyViewPresenter(
+            apolloClient = apolloClient,
+            superViewModel = superViewModel
+    )
 
     @Provides
     @PerFragmentLevel2
@@ -25,5 +33,4 @@ class WeeklyViewModule {
         viewModel.presenter = weeklyViewPresenter
         return viewModel
     }
-
 }

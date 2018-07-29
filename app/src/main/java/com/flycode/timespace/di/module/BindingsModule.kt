@@ -2,6 +2,8 @@ package com.flycode.timespace.di.module
 
 import com.flycode.timespace.di.scope.PerActivity
 import com.flycode.timespace.di.scope.PerService
+import com.flycode.timespace.services.groupService.GroupService
+import com.flycode.timespace.services.groupService.GroupServiceModule
 import com.flycode.timespace.services.userService.UserService
 import com.flycode.timespace.services.userService.UserServiceModule
 import com.flycode.timespace.ui.appInvites.AppInvitesActivity
@@ -10,8 +12,6 @@ import com.flycode.timespace.ui.appInvites.FragmentProvider
 import com.flycode.timespace.ui.auth.AuthActivity
 import com.flycode.timespace.ui.main.MainActivity
 import com.flycode.timespace.ui.main.MainModule
-import com.flycode.timespace.ui.organization.organizationView.OrganizationViewActivity
-import com.flycode.timespace.ui.organization.organizationView.OrganizationViewModule
 import com.flycode.timespace.ui.splash.SplashActivity
 import com.flycode.timespace.ui.splash.SplashModule
 import dagger.Module
@@ -32,14 +32,14 @@ abstract class BindingsModule {
     abstract fun mainActivity(): MainActivity
 
     @PerActivity
-    @ContributesAndroidInjector(modules = [(OrganizationViewModule::class)])
-    abstract fun organizationViewActivity(): OrganizationViewActivity
-
-    @PerActivity
     @ContributesAndroidInjector(modules = [(AppInvitesModule::class),(FragmentProvider::class)])
     abstract fun appInvitesFragment(): AppInvitesActivity
 
     @PerService
     @ContributesAndroidInjector(modules = [(UserServiceModule::class)])
     abstract fun userService(): UserService
+
+    @PerService
+    @ContributesAndroidInjector(modules = [(GroupServiceModule::class)])
+    abstract fun groupService(): GroupService
 }

@@ -7,9 +7,10 @@
     <fragment
         android:id="@+id/timeTableFragment"
         android:name="com.flycode.timespace.ui.main.timetable.TimeTableFragment"
-        android:label="TimeTables"
+        android:label="My TimeTables"
         tools:layout="@layout/time_table_fragment" />
 
+    <!--GROUPS-->
     <fragment
         android:id="@+id/groupsOverviewFragment"
         android:name="com.flycode.timespace.ui.main.groups.groupsOverview.GroupsOverviewFragment"
@@ -17,4 +18,63 @@
         tools:layout="@layout/fragment_group_overview">
         <deepLink app:uri="timespace://groups/orientation"/>
     </fragment>
+    <fragment
+        android:id="@+id/GroupViewFragment"
+        android:name="com.flycode.timespace.ui.main.groups.groupsView.GroupViewFragment"
+        android:label="GroupViewFragment"
+        tools:layout="@layout/fragment_group_view">
+        <deepLink app:uri="timespace://groups/group_event"/>
+    </fragment>
+    <fragment
+        android:id="@+id/GroupEntryFragment"
+        android:name="com.flycode.timespace.ui.main.groups.groupsEntry.GroupEntryFragment"
+        android:label="Make a new group"
+        tools:layout="@layout/fragment_group_entry">
+    </fragment>
+
+    <!--ENTRIES-->
+    <fragment
+        android:id="@+id/ClassEntryFragment"
+        android:name="com.flycode.timespace.ui.main.entries.classEntry.ClassEntryFragment"
+        android:label="Add a class"
+        tools:layout="@layout/fragment_class_entry">
+    </fragment>
+    <fragment
+        android:id="@+id/ExamEntryFragment"
+        android:name="com.flycode.timespace.ui.main.entries.examEntry.ExamEntryFragment"
+        android:label="Add an exam"
+        tools:layout="@layout/fragment_exam_entry">
+    </fragment>
+    <fragment
+        android:id="@+id/MeetingEntryFragment"
+        android:name="com.flycode.timespace.ui.main.entries.meetingEntry.MeetingEntryFragment"
+        android:label="Schedule a meeting"
+        tools:layout="@layout/fragment_meeting_entry">
+    </fragment>
+
+    <!--USER-->
+    <fragment
+        android:id="@+id/UserViewFragment"
+        android:name="com.flycode.timespace.ui.main.user.userView.UserViewFragment"
+        android:label="UserViewFragment"
+        tools:layout="@layout/fragment_user_view">
+    </fragment>
+
+    <fragment
+        android:id="@+id/TagFragment"
+        android:name="com.flycode.timespace.ui.main.tags.TagsFragment"
+        android:label="TagsFragment"
+        tools:layout="@layout/fragment_tags">
+    </fragment>
+
+    <fragment
+        android:id="@+id/AppInvitesFragment"
+        android:name="com.flycode.timespace.ui.appInvites.AppInvitesActivity"
+        android:label="AppInvitesFragment"
+        tools:layout="@layout/fragment_app_invites">
+    </fragment>
+
+
+
+
 </navigation>

@@ -1,0 +1,16 @@
+mutation addExam(
+    $examination: Examination_Input!,
+    $time: Time_Input!,
+    $location: Location_Input!,
+    $taggeds: [Tagged_Input!]
+){
+    examination(
+        method: ADD,
+        examination: $examination,
+        time: $time,
+        location: $location,
+        taggeds: $taggeds
+    ){
+        id
+    }
+}

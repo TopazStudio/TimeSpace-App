@@ -18,12 +18,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.flycode.healthbloom.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -49,7 +51,9 @@
         </activity>
 
         <!-- BASE NAV ACTIVITY -->
-        <activity android:name=".ui.main.MainActivity">
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter android:label="My Groups">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -69,14 +73,19 @@
         <!-- PINCODE ACTIVITY -->
         <activity android:name=".ui.pincode.PinCodeActivity" />
 
-        <!-- ORGANIZATION -->
-        <activity android:name=".ui.organization.organizationView.OrganizationViewActivity" />
-
         <!-- APP INVITES -->
-        <activity
-            android:name=".ui.appInvites.AppInvitesActivity"
-            android:label="Find friends and invite new ones"
-            android:windowSoftInputMode="stateHidden"></activity>
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <!-- FACEBOOK -->
         <meta-data
@@ -104,13 +113,15 @@
             android:name=".services.userService.UserService"
             android:enabled="true"
             android:exported="false" />
+        <service
+            android:name=".services.groupService.GroupService"
+            android:enabled="true"
+            android:exported="false" />
 
         <receiver
             android:name=".broadcastReceivers.ServiceStartedReceiver"
             android:enabled="true"
             android:exported="false" />
-
-        <activity android:name=".ui.user.userView.UserViewActivity"></activity>
     </application>
 
 </manifest>

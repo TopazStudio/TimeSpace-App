@@ -2,6 +2,7 @@ package com.flycode.timespace.ui.flexible_items
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.flycode.timespace.R
 import com.flycode.timespace.data.models.Clazz
@@ -86,10 +87,9 @@ class ClassListItem(
             adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?
     ) : FlexibleViewHolder(view,adapter) {
 
-        val tv_abbr: TextView? = view?.findViewById(R.id.tv_abbr)
+        val im_picture: ImageView? = view?.findViewById(R.id.im_picture)
         val tv_name: TextView? = view?.findViewById(R.id.tv_name)
         val tv_members: TextView? = view?.findViewById(R.id.tv_members)
-        val tv_accepted: TextView? = view?.findViewById(R.id.tv_accepted)
         val tv_start_time: TextView? = view?.findViewById(R.id.tv_start_time)
         val tv_end_time: TextView? = view?.findViewById(R.id.tv_end_time)
         val tv_time_table: TextView? = view?.findViewById(R.id.tv_time_table)

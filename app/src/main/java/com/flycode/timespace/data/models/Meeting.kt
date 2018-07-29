@@ -1,55 +1,63 @@
 package com.flycode.timespace.data.models
 
+import android.databinding.BaseObservable
+import android.databinding.Bindable
 import com.flycode.timespace.data.db.Database
+import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import com.raizlabs.android.dbflow.structure.BaseModel
+import java.io.Serializable
 
 @Table(database = (Database::class), name = "meetings" )
 @ManyToMany(referencedTable = Tag::class)
-data class Meeting(
-    @PrimaryKey(autoincrement = true)
-    @Column()
-    var id: Int = -1,
+class Meeting: BaseObservable(), Serializable{
+    @field: [PrimaryKey Column(name = "id")]
+    var id: Int = -1
 
-    @Column()
-    var name: String = "",
+    @field: [SerializedName("name") Column(name = "name")]
+    @get: Bindable
+    var name: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
-    @Column()
-    var note: String = "",
+    @field: [SerializedName("summary") Column(name = "summary")]
+    @get: Bindable
+    var summary: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
-    @Column()
-    var color: Int = 0,
 
-    @Column()
-    var description: String = "",
+    @field: [SerializedName("color") Column(name = "color")]
+    @get: Bindable
+    var color: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
+
 
     //RELATIONSHIPS
 
     @ForeignKey(saveForeignKeyModel = true)
-    var location: Location? = null,
+    var location: Location? = null
 
-    var times : List<Time>? = null,
-
-    @ForeignKey()
-    var timeTable: TimeTable? = null,
+    @ForeignKey(saveForeignKeyModel = true)
+    var time : Time? = null
 
     @ForeignKey()
-    var owner: User? = null,
+    var timeTable: TimeTable? = null
+
+    @ForeignKey()
+    var owner: User? = null
+
+    var tags: MutableList<Tag> = ArrayList()
 
     var attendances : List<Attendance>? = null
 
-): BaseModel(){
-
-    @OneToMany(methods = [OneToMany.Method.ALL],variableName = "times")
-    fun getMyTimes() : List<Time>?{
-        if (times == null)
-            times = SQLite.select()
-                    .from(Time::class.java)
-                    .where(Time_Table.timable_id.eq(id),Time_Table.timable_type.eq("meeting"))
-                    .queryList()
-        return times
-    }
 
     @OneToMany(methods = [OneToMany.Method.ALL],variableName = "attendances")
     fun getMyAttendances() : List<Attendance>?{

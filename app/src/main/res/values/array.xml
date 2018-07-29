@@ -21,4 +21,34 @@
         <item>Gen.</item>
         <item>Other.</item>
     </string-array>
+
+    <string-array name="tag_colors" >
+        <item>#ffbf00</item>
+        <item>#bfff00</item>
+        <item>#40ff00</item>
+        <item>#00ffbf</item>
+        <item>#0040ff</item>
+        <item>#8000ff</item>
+        <item>#ff00bf</item>
+        <item>#ff0000</item>
+    </string-array>
+
+    <string-array name="days_of_the_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+    <string-array name="exam_types">
+        <item>CAT</item>
+        <item>MID</item>
+        <item>END</item>
+        <item>RAT</item>
+        <item>FINAL</item>
+        <item>OPENER</item>
+    </string-array>
 </resources>

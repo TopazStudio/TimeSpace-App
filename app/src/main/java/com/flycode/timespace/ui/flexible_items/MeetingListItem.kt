@@ -1,38 +1,35 @@
 package com.flycode.timespace.ui.flexible_items
 
-import android.graphics.Color
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.amulyakhare.textdrawable.TextDrawable
+import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.flycode.timespace.R
 import com.flycode.timespace.data.models.Meeting
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.items.AbstractSectionableItem
-import eu.davidea.flexibleadapter.items.IFilterable
-import eu.davidea.flexibleadapter.items.IFlexible
-import eu.davidea.flexibleadapter.items.IHolder
+import eu.davidea.flexibleadapter.items.*
 import eu.davidea.viewholders.FlexibleViewHolder
-import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Where AbstractFlexibleItem implements IFlexible!
  */
 class MeetingListItem(
-        header : ExpandableHeaderItem,
-        var meeting: Meeting
-
-) : AbstractSectionableItem
-        <MeetingListItem.MyViewHolder,ExpandableHeaderItem>
-    (header),
-
-    IFilterable<Serializable>, IHolder<Meeting> {
+        header : AbstractExpandableHeaderItem<*, ISectionable<*, *>>,
+        var meeting: Meeting,
+        var context : Context? = null
+): AbstractSectionableItem<MeetingListItem.MyViewHolder, AbstractExpandableHeaderItem<*, ISectionable<*, *>>>(header),
+        IFilterable<String>,
+        IHolder<Meeting> {
 
     override fun getModel(): Meeting = meeting
 
     //Todo implement filter algorithm
-    override fun filter(constraint: Serializable?): Boolean {
+    override fun filter(constraint: String?): Boolean {
         return meeting.name.contains(constraint.toString())
     }
 
@@ -80,12 +77,14 @@ class MeetingListItem(
             payloads: MutableList<Any>?
     ) {
         holder?.tv_name?.text = meeting.name
-        holder?.tv_abbr?.setImageDrawable(
+        holder?.im_picture?.setImageDrawable(
                 TextDrawable.builder().buildRound(
                         meeting.name.toCharArray()[0].toString(),
-                        Color.BLUE
+                        ColorGenerator.MATERIAL.getColor(meeting.name)
                 )
         )
+        holder?.tv_start_time?.text = SimpleDateFormat("hh:mm a", Locale.US).format(Date(meeting.time?.start_time!!))
+        holder?.tv_end_time?.text = SimpleDateFormat("hh:mm a", Locale.US).format(Date(meeting.time?.end_time!!))
     }
 
     /**
@@ -97,10 +96,9 @@ class MeetingListItem(
             adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?
     ) : FlexibleViewHolder(view,adapter) {
 
-        val tv_abbr: ImageView? = view?.findViewById(R.id.tv_abbr)
+        val im_picture: ImageView? = view?.findViewById(R.id.im_picture)
         val tv_name: TextView? = view?.findViewById(R.id.tv_name)
         val tv_members: TextView? = view?.findViewById(R.id.tv_members)
-        val tv_accepted: TextView? = view?.findViewById(R.id.tv_accepted)
         val tv_start_time: TextView? = view?.findViewById(R.id.tv_start_time)
         val tv_end_time: TextView? = view?.findViewById(R.id.tv_end_time)
         val tv_time_table: TextView? = view?.findViewById(R.id.tv_time_table)

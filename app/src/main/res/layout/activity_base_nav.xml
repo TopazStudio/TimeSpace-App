@@ -30,8 +30,8 @@
             android:layout_height="match_parent"
             android:background="@color/colorWhite"
             android:layout_gravity="start"
-            app:itemTextColor="@color/colorDarkGray"
-            app:itemIconTint="@color/colorDarkGray"
+            app:itemTextColor="@color/colorBlack"
+            app:itemIconTint="@color/colorBlack"
             app:menu="@menu/base_navigation_drawer_menu">
 
         </android.support.design.widget.NavigationView>

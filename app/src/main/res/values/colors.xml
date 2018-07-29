@@ -9,10 +9,12 @@
     <color name="colorTransparentWhite">#d0ffffff</color>
 
     <color name="colorWhite">#ffffff</color>
+    <color name="colorTranslucentWhite">#94ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLtGreen">#9CF49C</color>
     <color name="colorGreen">#3EFF3E</color>
     <color name="colorLtRed">#FF9797</color>
+    <color name="colorLtRed2">#ff7373</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorLtBrown">#FFC983</color>
 
@@ -26,4 +28,41 @@
     <color name="facebook_color">#077BFF</color>
     <color name="google_color">#FF6161</color>
     <color name="tweeter_color">#81B1FF</color>
+
+    <!--HEALTH UPGRADE COLORS-->
+    <!--App Main colors-->
+    <color name="Primary">#5c9cfe</color>
+    <color name="PrimaryLight">#97a7ff</color>
+    <color name="PrimaryDisabled">#626a94</color>
+    <color name="PrimaryDark">#5252c1</color>
+    <color name="PrimaryAccent">#00dcff</color>
+    <color name="translucentColorPrimary">#5a3f51b5</color>
+
+
+    <!--Colourful tints-->
+    <color name="red">#ff4141</color>
+    <color name="redDark">#b1212b</color>
+    <color name="yellow">#ffc400</color>
+    <color name="yellowDark">#a39625</color>
+    <color name="green">#09f366</color>
+    <color name="greenDark">#40a65d</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="lightGray">#ececec</color>
+
+    <!--Dark tints-->
+    <color name="bg_gray">#b1b1b1</color>
+    <color name="bg_dark">#2d2d2d</color>
+    <color name="app_init_lightGray_txt">#afafaf</color>
+    <color name="app_init_lightGray_inputs_focused">#616161</color>
+    <color name="app_init_lightGray_inputs_unfocused">#424242</color>
+
+    <color name="lightGray_inputs">#dedede</color>
+    <color name="lightGray_inputs_hint">#a1a1a1</color>
+
+
+    <!--font color-->
+    <color name="app_init_text">#afafaf</color>
+    <color name="app_init_titles">#ffffff</color>
+    <color name="app_init_input_txt">#ffffff</color>
 </resources>

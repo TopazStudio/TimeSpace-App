@@ -2,6 +2,8 @@ package com.flycode.timespace.ui.main
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.annotation.NonNull
+import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import androidx.navigation.findNavController
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 class MainActivity
     : BaseActivity<MainActivity, MainPresenter, MainViewModel>()
-        , MainContract.MainActivity, BaseServiceContract.ServiceListener {
+        , MainContract.MainActivity, BaseServiceContract.ServiceListener,
+        NavigationView.OnNavigationItemSelectedListener{
 
     @Inject
     override lateinit var viewModel: MainViewModel
@@ -50,6 +53,7 @@ class MainActivity
         //NAV VIEW
         baseActivityBinding.baseNavView.addHeaderView(baseNavDrawerHeadingBindings.root)
         baseActivityBinding.baseNavView.setupWithNavController(findNavController(R.id.base_nav_fragment))
+//        baseActivityBinding.baseNavView.setNavigationItemSelectedListener(this);
     }
 
     override fun onSupportNavigateUp() = findNavController(R.id.base_nav_fragment).navigateUp()
@@ -59,7 +63,7 @@ class MainActivity
         actionBarDrawerToggle.syncState()
     }
 
-    private fun toggleDrawer() {
+    fun toggleDrawer() {
         if (baseActivityBinding.baseDrawerLayout.isDrawerOpen(baseActivityBinding.baseNavView)) {
             baseActivityBinding.baseDrawerLayout.closeDrawer(baseActivityBinding.baseNavView)
         } else
@@ -72,8 +76,18 @@ class MainActivity
                 toggleDrawer()
                 return true
             }
+
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onNavigationItemSelected(@NonNull item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logout_menu_item -> {
+                presenter.logout()
+            }
+        }
+        return true
     }
 
     override fun onError(error: String) {

@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.flycode.timespace.ui.organization.organizationView.OrganizationViewViewModel"/>
+            type="com.flycode.timespace.ui.main.organization.organizationView.OrganizationViewViewModel"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout

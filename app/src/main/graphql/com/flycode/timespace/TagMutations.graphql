@@ -1,0 +1,55 @@
+mutation addTag(
+    $tag: Tag_Input!
+){
+    tag(
+        method: ADD,
+        tag: $tag
+    ){
+        id
+        name
+        description
+        color
+    }
+}
+
+mutation deleteTag(
+    $tag: Tag_Input!
+){
+    tag(
+        method: DELETE,
+        tag: $tag
+    ){
+        id
+        name
+        description
+        color
+    }
+}
+
+mutation updateTag(
+    $tag: Tag_Input!
+){
+    tag(
+        method: UPDATE,
+        tag: $tag
+    ){
+        id
+        name
+        description
+        color
+    }
+}
+
+mutation tagTaggable(
+    $tagged: Tagged_Input!
+){
+    tagged(
+        method: ADD,
+        tagged: $tagged
+    ){
+       id
+       tag_id
+       taggable_id
+       taggable_type
+    }
+}

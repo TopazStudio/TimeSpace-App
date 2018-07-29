@@ -19,6 +19,9 @@ data class Time(
         var timable_type : String = "",
 
         @Column
+        var weekly_repeats: Int = 0,
+
+        @Column
         var start_time : Long = 0,
 
         @Column

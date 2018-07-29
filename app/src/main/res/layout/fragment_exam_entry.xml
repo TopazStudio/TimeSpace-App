@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class="ExamEntryBinding">
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.flycode.timespace.ui.main.entries.examEntry.ExamEntryViewModel"/>
+    </data>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        tools:context=".ui.main.entries.examEntry.ExamEntryViewModel">
+
+        <!--APP BAR-->
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:background="@color/colorWhite"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/details_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="@string/details"
+                            android:textColor="@color/colorBlack"
+                            android:padding="10dp"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/color_frame"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/color"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <android.support.design.widget.FloatingActionButton
+                                    android:id="@+id/fab_color"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    app:elevation="0dp"
+                                    android:contentDescription="@string/name"
+                                    app:backgroundTint="@color/colorGreen"
+                                    android:src="@drawable/ic_color_lens_white_24dp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/type_frame"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingEnd="20dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginEnd="10dp"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:textColor="@color/colorBlack"
+                                android:textStyle="bold"
+                                android:text="@string/type"/>
+
+                            <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/exam_type_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/bg_spinner"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/name_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/name"
+                            android:src="@drawable/ic_name_tag" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/name"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{viewModel.uiState.examination.name.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <EditText
+                                android:id="@+id/et_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@{viewModel.uiState.examination.name.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                android:hint="@string/name"
+                                android:text="@={viewModel.uiState.examination.name}"
+                                android:textSize="15sp"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/colorWhite"
+                                android:inputType="textEmailAddress"
+                                android:textColorHint="@color/colorBgDarkGray"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/teacher_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/name"
+                            android:src="@drawable/ic_note_add_black_24dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/note"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{viewModel.uiState.examination.note.empty  ? View.GONE : View.VISIBLE}"/>
+
+                            <EditText
+                                android:id="@+id/et_teacher"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="100dp"
+                                android:gravity="top|start"
+                                android:background="@{viewModel.uiState.examination.note.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                android:hint="@string/note"
+                                android:text="@={viewModel.uiState.examination.note}"
+                                android:textSize="15sp"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/colorWhite"
+                                android:inputType="textEmailAddress"
+                                android:textColorHint="@color/colorBgDarkGray"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/location_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="@string/location"
+                            android:textColor="@color/colorBlack"
+                            android:padding="10dp"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/address_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/name"
+                            android:src="@drawable/ic_location_on_black_24dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/address"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{viewModel.uiState.location.address.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <AutoCompleteTextView
+                                android:id="@+id/et_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@{viewModel.uiState.location.address.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                android:hint="@string/address"
+                                android:text="@={viewModel.uiState.location.address}"
+                                android:textSize="15sp"
+                                android:textColor="@color/colorWhite"
+                                android:textCursorDrawable="@null"
+                                android:inputType="textEmailAddress"
+                                android:textColorHint="@color/colorBgDarkGray"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:baselineAligned="false">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/name"
+                            android:src="@drawable/ic_buildings" />
+
+                        <LinearLayout
+                            android:id="@+id/building_frame"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4"
+                            android:layout_marginEnd="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/building"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{viewModel.uiState.location.building.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <EditText
+                                android:id="@+id/et_building"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@{viewModel.uiState.location.building.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                android:hint="@string/building"
+                                android:text="@={viewModel.uiState.location.building}"
+                                android:textSize="15sp"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/colorWhite"
+                                android:inputType="textEmailAddress"
+                                android:textColorHint="@color/colorBgDarkGray"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/floor_frame"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/floor"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{viewModel.uiState.location.floor.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <EditText
+                                android:id="@+id/et_floor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@{viewModel.uiState.location.floor.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                android:hint="@string/floor"
+                                android:text="@={viewModel.uiState.location.floor}"
+                                android:textSize="15sp"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/colorWhite"
+                                android:inputType="textEmailAddress"
+                                android:textColorHint="@color/colorBgDarkGray"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/room_frame"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:text="@string/room"
+                                android:textSize="12sp"
+                                android:layout_marginBottom="2dp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="@{viewModel.uiState.location.room.empty ? View.GONE : View.VISIBLE}"/>
+
+                            <EditText
+                                android:id="@+id/et_room"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@{viewModel.uiState.location.room.empty ? @drawable/et_lt_gray : @drawable/et_blue_rounded}"
+                                android:hint="@string/room"
+                                android:text="@={viewModel.uiState.location.room}"
+                                android:textSize="15sp"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@color/colorWhite"
+                                android:inputType="textEmailAddress"
+                                android:textColorHint="@color/colorBgDarkGray"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/time_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="@string/time"
+                            android:padding="10dp"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="18sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/name"
+                                android:src="@drawable/ic_date_range_black_24dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/date_hint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/date"
+                                    android:textSize="12sp"
+                                    android:layout_marginBottom="2dp"
+                                    android:textColor="@color/colorPrimary"
+                                    android:visibility="gone"/>
+
+                                <EditText
+                                    android:id="@+id/et_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/et_lt_gray"
+                                    android:textCursorDrawable="@null"
+                                    android:hint="@string/date"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/colorWhite"
+                                    android:inputType="date"
+                                    android:textColorHint="@color/colorBgDarkGray"/>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/name"
+                                android:src="@drawable/ic_access_time_black_24dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/start_time_hint"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/start_time"
+                                        android:textSize="12sp"
+                                        android:layout_marginBottom="2dp"
+                                        android:textColor="@color/colorPrimary"
+                                        android:visibility="gone"/>
+
+                                    <EditText
+                                        android:id="@+id/et_start_time"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/et_lt_gray"
+                                        android:hint="@string/start_time"
+                                        android:textCursorDrawable="@null"
+                                        android:textSize="15sp"
+                                        android:textColor="@color/colorWhite"
+                                        android:inputType="textEmailAddress"
+                                        android:textColorHint="@color/colorBgDarkGray"/>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="10dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/end_time_hint"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/end_time"
+                                        android:textSize="12sp"
+                                        android:layout_marginBottom="2dp"
+                                        android:textColor="@color/colorPrimary"
+                                        android:visibility="gone"/>
+
+                                    <EditText
+                                        android:id="@+id/et_end_time"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/et_lt_gray"
+                                        android:hint="@string/end_time"
+                                        android:textCursorDrawable="@null"
+                                        android:textSize="15sp"
+                                        android:textColor="@color/colorWhite"
+                                        android:inputType="textEmailAddress"
+                                        android:textColorHint="@color/colorBgDarkGray"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tags_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:text="@string/tags"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="18sp" />
+
+                            <android.support.v4.widget.Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"/>
+
+                            <ImageButton
+                                android:id="@+id/btn_add_tag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_gravity="end|center_vertical"
+                                android:src="@drawable/ic_add_white_24dp"
+                                android:background="@drawable/circle_btn_dark_gray"
+                                android:textSize="12sp"
+                                android:contentDescription="@string/add" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBgDarkGray"/>
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/chips_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/colorBgDarkGray"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhite"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="@{viewModel.uiState.isEmptyTagsHidden? View.GONE : View.VISIBLE}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/no_tags_yet"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorDarkGray"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:paddingStart="30dp"
+                                android:paddingEnd="30dp"
+                                android:text="@string/click_the_button_to_add_your_own_or"
+                                android:textSize="15sp"
+                                android:textColor="@color/colorDarkGray"/>
+
+                        </LinearLayout>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <!--FAB-->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_done_white_24dp"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:elevation="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

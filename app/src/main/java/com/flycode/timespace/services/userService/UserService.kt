@@ -14,7 +14,7 @@ import android.widget.RemoteViews
 import com.flycode.timespace.R
 import com.flycode.timespace.data.models.User
 import com.flycode.timespace.ui.base.BaseService
-import com.flycode.timespace.ui.main.MainActivity
+import com.flycode.timespace.ui.main.user.userView.UserViewFragment
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import javax.inject.Inject
@@ -66,7 +66,7 @@ class UserService
         val contentIntent = PendingIntent.getActivity(
                 this,
                 NEW_FOLLOWER_REQUEST_CODE,
-                Intent(this, MainActivity::class.java).apply {
+                Intent(this, UserViewFragment::class.java).apply {
                     this.putExtra("userFollower",data)
                 },
                 0

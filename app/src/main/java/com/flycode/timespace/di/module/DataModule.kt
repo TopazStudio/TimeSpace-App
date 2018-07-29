@@ -17,10 +17,12 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.flycode.timespace.data.Config
 import com.flycode.timespace.data.models.User
 import com.flycode.timespace.data.models.User_Table
+import com.flycode.timespace.data.models.apolloAdapters.DateTimeAdapter
 import com.flycode.timespace.data.network.AppInvitesService
 import com.flycode.timespace.data.network.AuthService
 import com.flycode.timespace.data.network.GroupService
 import com.flycode.timespace.data.network.TempService
+import com.flycode.timespace.type.CustomType
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.util.HttpAuthorizer
@@ -208,6 +210,7 @@ open class DataModule{
     ) : ApolloClient =
         ApolloClient.builder()
                 .serverUrl(Config.GRAPHQL_ENDPOINT)
+                .addCustomTypeAdapter(CustomType.DATETIME, DateTimeAdapter())
                 .normalizedCache(normalizedCacheFactory, cacheKeyResolver)
                 .okHttpClient(okHttpClient)
                 .build()

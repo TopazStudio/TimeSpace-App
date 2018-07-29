@@ -2,6 +2,8 @@ package com.flycode.timespace.ui.main.timetable.dailyview
 
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +32,11 @@ class DailyViewFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).setSupportActionBar(toolbar as Toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.title = "My Timetable"
+
         init()
     }
 
@@ -54,12 +61,10 @@ class DailyViewFragment
     }
 
     private fun setUpData() {
-        val reachAbleDays = ArrayList<CalendarDay>()
-        //TODO: yearly range
-        reachAbleDays.add(CalendarDay(2018, 1, 1))
-        reachAbleDays.add(CalendarDay(2018, 12, 31))
-        weekViewAdapter.setData(reachAbleDays[0], reachAbleDays[reachAbleDays.size - 1], null)
-        dailyPagerAdapter.setData(reachAbleDays[0], reachAbleDays[reachAbleDays.size - 1])
+        weekViewAdapter.setData(CalendarDay(2018, 7, 1),
+                CalendarDay(2018, 6, 1), null)
+        dailyPagerAdapter.setData(CalendarDay(2018, 7, 1),
+                CalendarDay(2018, 6, 1))
     }
 
     override fun onDayPageScrolled(position: Int, postionOffset: Float, positionOffesetPixels: Int) {

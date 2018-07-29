@@ -76,3 +76,22 @@ query getOrganizationGroups($id: ID){
         }
     }
 }
+
+query getUserGroups($id: ID){
+    user(method: GET_ONE, id: $id){
+         group_memberships{
+              group{
+                  id
+                  name
+                  description
+                  created_at
+                  pictures{
+                       remote_location
+                  }
+              }
+              created_at
+              join_status
+         }
+
+    }
+}

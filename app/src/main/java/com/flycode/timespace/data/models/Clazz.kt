@@ -1,53 +1,70 @@
 package com.flycode.timespace.data.models
 
 import android.databinding.BaseObservable
+import android.databinding.Bindable
 import com.flycode.timespace.data.db.Database
+import com.google.gson.annotations.SerializedName
 import com.raizlabs.android.dbflow.annotation.*
 import com.raizlabs.android.dbflow.sql.language.SQLite
-import com.raizlabs.android.dbflow.structure.BaseModel
+import java.io.Serializable
 
 @Table(database = (Database::class), name = "classes" )
 @ManyToMany(referencedTable = Tag::class)
-data class Clazz(
-        @PrimaryKey(autoincrement = true)
-        @Column()
-        var id: Int = -1,
+class Clazz: BaseObservable(), Serializable {
+    @field: [PrimaryKey Column(name = "id")]
+    var id: Int = -1
 
-        @Column()
-        var name: String = "",
+    @field: [SerializedName("name") Column(name = "name")]
+    @get: Bindable
+    var name: String = ""
+            set(value) {
+        field = value
+        notifyChange()
+    }
 
-        @Column()
-        var note: String = "",
+    @field: [SerializedName("abbreviation") Column(name = "abbreviation")]
+    @get: Bindable
+    var abbreviation: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
-        @Column()
-        var abbreviation: String = "",
 
-        @Column()
-        var color: Int = 0,
+    @field: [SerializedName("color") Column(name = "color")]
+    @get: Bindable
+    var color: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
-        @Column()
-        var description: String = "",
+    @field: [SerializedName("teacher_name") Column(name = "teacher_name")]
+    @get: Bindable
+    var teacher_name: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
+
 
         // RELATIONSHIPS
 
-        @ForeignKey(saveForeignKeyModel = true)
-        var location: Location? = null,
+    @ForeignKey(saveForeignKeyModel = true)
+    var location: Location? = null
 
-        @ForeignKey(saveForeignKeyModel = true)
-        var time: Time? = null,
+    @ForeignKey(saveForeignKeyModel = true)
+    var time : Time? = null
 
-        @ForeignKey()
-        var teacher: User? = null,
+    @ForeignKey()
+    var timeTable: TimeTable? = null
 
-        @ForeignKey()
-        var timeTable: TimeTable? = null,
+    @ForeignKey()
+    var owner: User? = null
 
-        @ForeignKey()
-        var owner: User? = null,
+    var tags: MutableList<Tag> = ArrayList()
 
-        var attendances : List<Attendance>? = null
-
-): BaseModel(){
+    var attendances : List<Attendance>? = null
 
     @OneToMany(methods = [OneToMany.Method.ALL],variableName = "attendances")
     fun getMyAttendances() : List<Attendance>?{

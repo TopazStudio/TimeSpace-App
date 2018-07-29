@@ -35,6 +35,6 @@ class AppInvitesModule {
     @PerActivity
     fun provideAppInvitesViewPager(
             appInvitesActivity: AppInvitesActivity
-    ): AppInvitesViewPager = AppInvitesViewPager(appInvitesActivity.supportFragmentManager)
+    ): AppInvitesViewPager = AppInvitesViewPager(appInvitesActivity.childFragmentManager)
 
 }

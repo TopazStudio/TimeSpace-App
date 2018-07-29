@@ -2,6 +2,7 @@ package com.flycode.timespace.ui.main.groups.groupsOverview
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.NavHostFragment
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.rx2.Rx2Apollo
@@ -9,14 +10,13 @@ import com.flycode.timespace.R
 import com.flycode.timespace.SearchGroupQuery
 import com.flycode.timespace.SearchOrganizationQuery
 import com.flycode.timespace.data.models.Group
-import com.flycode.timespace.data.models.GroupMember
+import com.flycode.timespace.data.models.GroupMembership
 import com.flycode.timespace.data.models.Organization
 import com.flycode.timespace.data.network.GroupService
 import com.flycode.timespace.ui.base.BasePresenter
 import com.flycode.timespace.ui.flexible_items.ExpandableHeaderItem
 import com.flycode.timespace.ui.flexible_items.GroupListItem
 import com.flycode.timespace.ui.flexible_items.OrganizationListItem
-import com.flycode.timespace.ui.organization.organizationView.OrganizationViewActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.raizlabs.android.dbflow.kotlinextensions.delete
@@ -28,6 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
+//TODO: deal with groupmembership
 class GroupsOverviewPresenter(
         val apolloClient: ApolloClient,
         val searchResultsListAdapter: FlexibleAdapter<ISectionable<*,*>>,
@@ -158,15 +159,17 @@ class GroupsOverviewPresenter(
     }
 
     fun onOrganizationClicked(organization: Organization) {
-        view?.openForResult(OrganizationViewActivity::class.java,
-                GroupsOverviewFragment.ORGANIZATION_VIEW_RESULT_CODE,
-                Bundle().apply {
-                    this.putString("organization",Gson().toJson(organization))
-                })
+//        view?.openForResult(OrganizationViewFragment::class.java,
+//                GroupsOverviewFragment.ORGANIZATION_VIEW_RESULT_CODE,
+//                Bundle().apply {
+//                    this.putString("organization",Gson().toJson(organization))
+//                })
     }
 
     fun onGroupClicked(group: Group) {
-        //TODO: Create group view activity
+        NavHostFragment.findNavController(view!!).navigate(R.id.GroupViewFragment, Bundle().apply {
+            this.putString("group",Gson().toJson(group))
+        })
     }
 
     fun onJoinedGroupRemoved(groupListItem: GroupListItem,holder: GroupListItem.MyViewHolder?,position: Int) {
@@ -174,9 +177,9 @@ class GroupsOverviewPresenter(
             holder?.join_request_progress_bar?.visibility = View.VISIBLE
             holder?.btn_join?.visibility = View.GONE
 
-            compositeDisposable.add(groupService.leaveGroup(GroupMember().apply {
-                    this.user_id = viewModel.user.id
-                    this.group_id = groupListItem.model.id
+            compositeDisposable.add(groupService.leaveGroup(GroupMembership().apply {
+                    this.user_id_2 = viewModel.user.id
+                    this.group_id_2 = groupListItem.model.id
                 })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -222,9 +225,9 @@ class GroupsOverviewPresenter(
             holder?.btn_join?.visibility = View.GONE
 
             compositeDisposable.add(
-                groupService.joinGroup(GroupMember().apply {
-                this.user_id = viewModel.user.id
-                this.group_id = groupListItem.model.id
+                groupService.joinGroup(GroupMembership().apply {
+                this.user_id_2 = viewModel.user.id
+                this.group_id_2= groupListItem.model.id
             })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -288,9 +291,9 @@ class GroupsOverviewPresenter(
             holder?.btn_join?.visibility = View.GONE
 
             compositeDisposable.add(
-                groupService.leaveGroup(GroupMember().apply {
-                    this.user_id = viewModel.user.id
-                    this.group_id = groupListItem.model.id
+                groupService.leaveGroup(GroupMembership().apply {
+                    this.user_id_2 = viewModel.user.id
+                    this.group_id_2 = groupListItem.model.id
                 })
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

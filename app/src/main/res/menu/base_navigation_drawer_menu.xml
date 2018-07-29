@@ -5,6 +5,41 @@
         android:checkableBehavior="single">
         <item
             android:id="@id/timeTableFragment"
-            android:title="@string/timetables_navigation_item"/>
+            android:title="@string/timetables_navigation_item"
+            android:icon="@drawable/ic_calendar_black"/>
+
+        <item
+            android:id="@id/groupsOverviewFragment"
+            android:title="@string/group_navigation_item"
+            android:icon="@drawable/ic_group_black_24dp"/>
+
+        <!--<item-->
+            <!--android:id="@id/timeTableFragment"-->
+            <!--android:title="@string/timetables_navigation_item"-->
+            <!--android:icon="@drawable/ic_calendar_black"/>-->
+    </group>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
+        <item
+            android:id="@id/AppInvitesFragment"
+            android:title="@string/app_invites_navigation_item"
+            android:icon="@drawable/ic_group_add_black_24dp" />
+        <item
+            android:id="@id/TagFragment"
+            android:title="@string/tags_navigation_item"
+            android:icon="@drawable/ic_tags" />
+        <item
+            android:id="@id/UserViewFragment"
+            android:title="@string/user_profile_navigation_item"
+            android:icon="@drawable/ic_person_black_24dp" />
+        <item
+            android:id="@+id/settings_menu_item"
+            android:title="@string/settings_navigation_item"
+            android:icon="@drawable/ic_settings_black_24dp"/>
+        <item
+            android:id="@+id/logout_menu_item"
+            android:title="@string/logout_navigation_item"
+            android:icon="@drawable/ic_logout" />
     </group>
 </menu>
