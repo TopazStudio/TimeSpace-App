@@ -13,7 +13,7 @@ import com.flycode.timespace.data.models.Picture
 import com.flycode.timespace.data.models.Response
 import com.flycode.timespace.data.models.User
 import com.flycode.timespace.data.models.apolloMappers.UserMapper
-import com.flycode.timespace.data.network.TempService
+import com.flycode.timespace.data.network.retrofit.TempService
 import com.flycode.timespace.ui.base.BasePresenter
 import com.flycode.timespace.ui.main.MainActivity
 import com.google.gson.Gson

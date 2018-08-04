@@ -2,7 +2,7 @@ package com.flycode.timespace.ui.main.organization.organizationView
 
 import android.arch.lifecycle.ViewModelProviders
 import com.apollographql.apollo.ApolloClient
-import com.flycode.timespace.data.network.GroupService
+import com.flycode.timespace.data.network.retrofit.GroupService
 import com.flycode.timespace.di.scope.PerFragmentLevel1
 import dagger.Module
 import dagger.Provides

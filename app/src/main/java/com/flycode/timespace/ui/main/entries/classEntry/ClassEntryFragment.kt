@@ -35,7 +35,6 @@ class ClassEntryFragment
         ClassEntryContract.ClassEntryFragment,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private val PERMISSION_REQUEST_CODE = 0
     @Inject override lateinit var viewModel: ClassEntryViewModel
     @Inject lateinit var placeAutocompleteAdapter: PlaceAutocompleteAdapter
     @field: [Inject Named("main_tag_adapter")]

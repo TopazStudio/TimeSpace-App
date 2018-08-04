@@ -37,7 +37,6 @@ class ProfilePicFragment
 
     private val SELECT_PHOTO = 1
     private val CAPTURE_PHOTO = 2
-    private val PERMISSION_REQUEST_CODE = 3
     var imagePermission = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

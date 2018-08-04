@@ -18,10 +18,10 @@ import com.flycode.timespace.data.Config
 import com.flycode.timespace.data.models.User
 import com.flycode.timespace.data.models.User_Table
 import com.flycode.timespace.data.models.apolloAdapters.DateTimeAdapter
-import com.flycode.timespace.data.network.AppInvitesService
-import com.flycode.timespace.data.network.AuthService
-import com.flycode.timespace.data.network.GroupService
-import com.flycode.timespace.data.network.TempService
+import com.flycode.timespace.data.network.retrofit.AppInvitesService
+import com.flycode.timespace.data.network.retrofit.AuthService
+import com.flycode.timespace.data.network.retrofit.GroupService
+import com.flycode.timespace.data.network.retrofit.TempService
 import com.flycode.timespace.type.CustomType
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions

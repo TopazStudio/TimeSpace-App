@@ -1,7 +1,7 @@
 package com.flycode.timespace.ui.appInvites.contactInvites
 
 import android.arch.lifecycle.ViewModelProviders
-import com.flycode.timespace.data.network.AppInvitesService
+import com.flycode.timespace.data.network.retrofit.AppInvitesService
 import com.flycode.timespace.di.scope.PerFragmentLevel1
 import com.flycode.timespace.ui.appInvites.AppInvitesViewModel
 import com.flycode.timespace.ui.flexible_items.ContactsListHeaderItem

@@ -2,7 +2,7 @@ package com.flycode.timespace.ui.main.groups.groupsOverview
 
 import android.arch.lifecycle.ViewModelProviders
 import com.apollographql.apollo.ApolloClient
-import com.flycode.timespace.data.network.GroupService
+import com.flycode.timespace.data.network.retrofit.GroupService
 import com.flycode.timespace.di.scope.PerFragmentLevel1
 import com.flycode.timespace.ui.flexible_items.ExpandableHeaderItem
 import dagger.Module

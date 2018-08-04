@@ -71,10 +71,10 @@
     <string name="sign_in_with">SIGN IN WITH</string>
     <string name="search">Search</string>
     <string name="join_your_organizations_and_groups">SEARCH FOR YOUR ORGANIZATION AND JOIN YOUR GROUPS.</string>
-    <string name="results">RESULTS</string>
-    <string name="joined">JOINED</string>
+    <string name="results">Results</string>
+    <string name="joined">Joined</string>
     <string name="results_count">30 results</string>
-    <string name="suggested">SUGGESTED</string>
+    <string name="suggested">Suggested</string>
     <string name="paste_an_invitation_link">PASTE AN INVITATION LINK</string>
     <string name="item">item</string>
     <string name="member_since">member since</string>
@@ -86,8 +86,8 @@
     <string name="_results">results</string>
     <string name="organization">organization</string>
     <string name="view">view</string>
-    <string name="pending">PENDING</string>
-    <string name="rejected">REJECTED</string>
+    <string name="pending">Pending</string>
+    <string name="rejected">Rejected</string>
     <string name="request_rejected">request has been rejected</string>
     <string name="joined_successfully">joined successfully</string>
     <string name="join">JOIN</string>
@@ -119,7 +119,6 @@
     <string name="private_user">private user</string>
     <string name="busy">Busy</string>
     <string name="permissions_granted">Permissions granted</string>
-    <string name="we_need_permission_to_function">In order to continue, please grant us the required permissions.</string>
     <string name="created_on">Created on</string>
     <string name="name">Name</string>
     <string name="abbr">Abbr</string>
@@ -181,4 +180,13 @@
     <string name="_5">5</string>
     <string name="type">Type</string>
     <string name="app_invites_navigation_item">Invite or Find your Friend</string>
+    <string name="add_tags_from_the_tags_menu">Add tags from the tags menu on the left</string>
+    <string name="size">size</string>
+    <string name="bytes">Byte(s)</string>
+    <string name="no_attachments_yet">NO ATTACHMENTS YET</string>
+    <string name="click_the_button_to_add_attachment">Click the + button below to add attachments to this meeting.</string>
+    <string name="no_attendees_yet">NO ATTENDEES YET</string>
+    <string name="use_search_to_add_attendee">Use the search bar at the top to search for people and add them to the meeting. You can also invite anyone who is not yet using TimeSpace.</string>
+    <string name="we_need_permission_to_function">Sorry but we won\'t be able to provide full functionality without the following permissions:%1$s</string>
+    <string name="no_permissions">We don\'t have permission</string>
 </resources>

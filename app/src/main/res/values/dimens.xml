@@ -20,6 +20,6 @@
     <dimen name="app_init_fieldHintTitles">12sp</dimen>
 
     <!--tags-->
-    <dimen name="tag_spacing">20dp</dimen>
+    <dimen name="tag_spacing">10dp</dimen>
     <dimen name="fab_margin">20dp</dimen>
 </resources>

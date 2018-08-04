@@ -1,0 +1,20 @@
+mutation addMeeting(
+    $meeting: Meeting_Input!,
+    $time: Time_Input!,
+    $location: Location_Input!,
+    $taggeds: [Tagged_Input!],
+    $users: [User_Input]!,
+    $documents: [Document_Input!]
+){
+    meeting(
+        method: ADD,
+        meeting: $meeting,
+        time: $time,
+        location: $location,
+        taggeds: $taggeds,
+        users: $users,
+        documents: $documents,
+    ){
+        id
+    }
+}

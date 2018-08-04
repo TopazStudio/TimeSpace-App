@@ -20,7 +20,6 @@ import com.flycode.timespace.ui.main.entries.meetingEntry.MeetingEntryFragment
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.common.SmoothScrollLinearLayoutManager
 import eu.davidea.flexibleadapter.utils.Log
-import kotlinx.android.synthetic.main.fragment_meeting_attendees.*
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -28,7 +27,8 @@ class MeetingAttendeesFragment
     : BaseFragment<MeetingAttendeesFragment, MeetingAttendeesPresenter, MeetingAttendeesViewModel>(),
         MeetingAttendeesContract.MeetingAttendeesFragment,
         MeetingEntryFragment.MeetingEntryFragmentInterface,
-        PlainUserListItem.PlainUserListItemListener {
+        PlainUserListItem.PlainUserListItemListener, PlainHeaderItem.PlainHeaderItemListener {
+
     @Inject
     override lateinit var viewModel: MeetingAttendeesViewModel
     lateinit var meetingAttendeesBinding: MeetingAttendeesBinding
@@ -43,7 +43,7 @@ class MeetingAttendeesFragment
     private var input_finish_handler = Handler()
     private val input_finish_checker = Runnable {
         if (System.currentTimeMillis() > viewModel.lastTextEdit + input_finish_delay - 500) {
-            presenter.searchUsers(meetingAttendeesBinding.edSearch.text.toString())
+            presenter.searchUsers(meetingAttendeesBinding.etSearch.text.toString())
             onOpenSearch()
         }
     }
@@ -59,7 +59,7 @@ class MeetingAttendeesFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        meetingAttendeesBinding.edSearch.addTextChangedListener(object : TextWatcher {
+        meetingAttendeesBinding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
                                            after: Int) {
             }
@@ -85,7 +85,7 @@ class MeetingAttendeesFragment
         }
 
         meetingAttendeesBinding.searchReloadBtn.setOnClickListener {
-            presenter.searchUsers(meetingAttendeesBinding.edSearch.text.toString())
+            presenter.searchUsers(meetingAttendeesBinding.etSearch.text.toString())
         }
 
         meetingAttendeesBinding.btnSearchToggle.setOnClickListener {
@@ -95,7 +95,7 @@ class MeetingAttendeesFragment
                 onCloseSearch()
             }
         }
-        meetingAttendeesBinding.btnCloseSearchHint.setOnClickListener {
+        meetingAttendeesBinding.btnCloseInvitationHint.setOnClickListener {
             viewModel.uiState.isInvitationHintOpen = false
         }
         setupMainRecyclerViews()
@@ -107,6 +107,7 @@ class MeetingAttendeesFragment
         FlexibleAdapter.enableLogs(Log.Level.DEBUG)
         FlexibleAdapter.useTag("MainAdapter")
 
+        viewModel.mainListHeaderItem.listener = this@MeetingAttendeesFragment
         mainListAdapter.addItem(0, viewModel.mainListHeaderItem)
 
 
@@ -131,9 +132,6 @@ class MeetingAttendeesFragment
         mainListAdapter.expandAll()
     }
 
-    /**
-     * Setup the recycler view by adding the adapter
-     * */
     private fun setupSearchRecyclerView(){
         //ADAPTER
         FlexibleAdapter.enableLogs(Log.Level.DEBUG)
@@ -164,7 +162,7 @@ class MeetingAttendeesFragment
 //                    .onStart {
 //                        search_results.visibility = View.VISIBLE
 //                    }
-                    .playOn(search_results)
+                    .playOn(meetingAttendeesBinding.searchResults)
 
             YoYo.with(Techniques.FadeOut)
                     .duration(500)
@@ -173,7 +171,7 @@ class MeetingAttendeesFragment
 //                    .onEnd {
 //                        details_frame.visibility = View.GONE
 //                    }
-                    .playOn(main_recycler_view)
+                    .playOn(meetingAttendeesBinding.mainRecyclerView)
 
             viewModel.uiState.isSearchOpen = true
         }
@@ -189,7 +187,7 @@ class MeetingAttendeesFragment
 //                    .onEnd {
 //                        search_results.visibility = View.GONE
 //                    }
-                    .playOn(search_results)
+                    .playOn(meetingAttendeesBinding.searchResults)
 
 
             YoYo.with(Techniques.FadeIn)
@@ -198,19 +196,19 @@ class MeetingAttendeesFragment
 //                    .onStart{
 //                        details_frame.visibility = View.VISIBLE
 //                    }
-                    .playOn(main_recycler_view)
+                    .playOn(meetingAttendeesBinding.mainRecyclerView)
 
             viewModel.uiState.isSearchOpen = false
         }
     }
 
-//    override fun onExpand(position: Int) {
-//        mainListAdapter.expand(position)
-//    }
-//
-//    override fun onCollapse(position: Int){
-//        mainListAdapter.collapse(position)
-//    }
+    override fun onExpand(position: Int) {
+        mainListAdapter.expand(position)
+    }
+
+    override fun onCollapse(position: Int){
+        mainListAdapter.collapse(position)
+    }
 
     override fun onUserClicked(plainUserListItem: PlainUserListItem) {
         presenter.addItemToMainList(plainUserListItem)

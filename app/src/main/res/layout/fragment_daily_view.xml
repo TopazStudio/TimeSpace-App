@@ -25,25 +25,35 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_collapseMode="parallax"
-                android:orientation="vertical"
-                android:layout_marginTop="?attr/actionBarSize">
+                android:orientation="vertical">
 
-                <include layout="@layout/view_week_label"/>
-
-                <com.test.tudou.library.WeekPager.view.WeekRecyclerView
-                    android:id="@+id/week_recycler_view"
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:clipToPadding="false"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    android:scrollbars="none"/>
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/AppTheme.PopupOverlay">
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar"/>
+                </android.support.v7.widget.Toolbar>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/view_week_label"/>
+
+                    <com.test.tudou.library.WeekPager.view.WeekRecyclerView
+                        android:id="@+id/week_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:clipToPadding="false"
+                        android:scrollbars="none"/>
+                </LinearLayout>
+            </LinearLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -52,6 +62,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding"
+            android:textSize="15sp"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"/>
 
     </android.support.design.widget.AppBarLayout>

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import com.apollographql.apollo.ApolloClient
 import com.flycode.timespace.di.scope.PerFragmentLevel2
 import com.flycode.timespace.ui.main.entries.classEntry.PlaceAutocompleteAdapter
+import com.flycode.timespace.ui.main.entries.meetingEntry.MeetingEntryViewModel
 import com.google.android.gms.location.places.AutocompleteFilter
 import com.google.android.gms.location.places.GeoDataClient
 import com.google.android.gms.location.places.PlaceDetectionClient
@@ -22,12 +23,14 @@ open class MeetingDetailsModule {
             placeAutocompleteAdapter: PlaceAutocompleteAdapter,
             apolloClient: ApolloClient,
             @Named("main_tag_adapter") mainTagsAdapter: MeetingTagsAdapter,
-            @Named("tag_picker_tag_adapter") tagPickerTagsAdapter: MeetingTagsAdapter
+            @Named("tag_picker_tag_adapter") tagPickerTagsAdapter: MeetingTagsAdapter,
+            superViewModel: MeetingEntryViewModel
     ): MeetingDetailsPresenter = MeetingDetailsPresenter(
             placeAutocompleteAdapter = placeAutocompleteAdapter,
             apolloClient = apolloClient,
             mainTagsAdapter = mainTagsAdapter,
-            tagPickerTagsAdapter = tagPickerTagsAdapter
+            tagPickerTagsAdapter = tagPickerTagsAdapter,
+            superViewModel = superViewModel
     )
 
     @Provides
@@ -72,9 +75,11 @@ open class MeetingDetailsModule {
     @Provides
     @PerFragmentLevel2
     fun provideTagAdapter(
-            meetingDetailsFragment: MeetingDetailsFragment
+            meetingDetailsFragment: MeetingDetailsFragment,
+            meetingEntryViewModel: MeetingEntryViewModel
     ): MeetingTagsAdapter = MeetingTagsAdapter(
-            context = meetingDetailsFragment.context!!
+            context = meetingDetailsFragment.context!!,
+            tagList = meetingEntryViewModel.tagList
     )
 
     @Named("tag_picker_tag_adapter")
@@ -83,6 +88,7 @@ open class MeetingDetailsModule {
     fun provideTagPickerTagAdapter(
             meetingDetailsFragment: MeetingDetailsFragment
     ): MeetingTagsAdapter = MeetingTagsAdapter(
-            context = meetingDetailsFragment.context!!
+            context = meetingDetailsFragment.context!!,
+            tagList = ArrayList()
     )
 }

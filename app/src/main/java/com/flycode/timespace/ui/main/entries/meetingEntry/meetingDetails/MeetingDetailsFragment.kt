@@ -36,12 +36,9 @@ class MeetingDetailsFragment
         MeetingEntryFragment.MeetingEntryFragmentInterface,
         GoogleApiClient.OnConnectionFailedListener {
 
-    @Inject
-    override lateinit var viewModel: MeetingDetailsViewModel
+    @Inject override lateinit var viewModel: MeetingDetailsViewModel
     @Inject lateinit var superViewModel: MeetingEntryViewModel
     lateinit var meetingsDetailsBinding: MeetingsDetailsBinding
-
-    private val PERMISSION_REQUEST_CODE = 0
     @Inject lateinit var placeAutocompleteAdapter: PlaceAutocompleteAdapter
     @field: [Inject Named("main_tag_adapter")]
     lateinit var mainClassTagsAdapter: MeetingTagsAdapter
@@ -49,9 +46,6 @@ class MeetingDetailsFragment
     lateinit var tagPickerClassTagsAdapter: MeetingTagsAdapter
     lateinit var customTagPickerBinding: CustomTagsPickerBinding
     lateinit var customTagPickerDialog: MaterialDialog
-    
-    private var startTime : Calendar = Calendar.getInstance()
-    private var endTime : Calendar = Calendar.getInstance()
     private var dateSetListener: DatePickerDialog.OnDateSetListener? = null
     private var endTime_TimeSetListener: TimePickerDialog.OnTimeSetListener? = null
     private var startTime_TimeSetListener: TimePickerDialog.OnTimeSetListener? = null
@@ -63,6 +57,7 @@ class MeetingDetailsFragment
 
         meetingsDetailsBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_meeting_details,container,false)
         meetingsDetailsBinding.superViewModel = superViewModel
+        meetingsDetailsBinding.viewModel = viewModel
         meetingsDetailsBinding.setLifecycleOwner(this)
 
         return meetingsDetailsBinding.root
@@ -70,7 +65,6 @@ class MeetingDetailsFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkInternetPermissions()
         if(googleApiClient == null)
             googleApiClient = GoogleApiClient
                     .Builder(context!!)
@@ -89,24 +83,24 @@ class MeetingDetailsFragment
 
         meetingsDetailsBinding.etDate.setOnClickListener {
             DatePickerDialog(context, dateSetListener,
-                    startTime.get(Calendar.YEAR),
-                    startTime.get(Calendar.MONTH),
-                    startTime.get(Calendar.DAY_OF_MONTH)
+                    superViewModel.startTime.get(Calendar.YEAR),
+                    superViewModel.startTime.get(Calendar.MONTH),
+                    superViewModel.startTime.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
 
         meetingsDetailsBinding.etStartTime.setOnClickListener {
             TimePickerDialog(context, startTime_TimeSetListener,
-                    startTime.get(Calendar.HOUR_OF_DAY),
-                    startTime.get(Calendar.MINUTE),
+                    superViewModel.startTime.get(Calendar.HOUR_OF_DAY),
+                    superViewModel.startTime.get(Calendar.MINUTE),
                     false
             ).show()
         }
 
         meetingsDetailsBinding.etEndTime.setOnClickListener {
             TimePickerDialog(context, endTime_TimeSetListener,
-                    endTime.get(Calendar.HOUR_OF_DAY),
-                    endTime.get(Calendar.MINUTE),
+                    superViewModel.endTime.get(Calendar.HOUR_OF_DAY),
+                    superViewModel.endTime.get(Calendar.MINUTE),
                     false
             ).show()
         }
@@ -128,7 +122,7 @@ class MeetingDetailsFragment
             SpectrumDialog.Builder(context!!)
                     .setOnColorSelectedListener { positiveResult, color ->
                         if (positiveResult) {
-                            viewModel.uiState.clazz.color =  String.format("#%06X", 0xFFFFFF and color)
+                            superViewModel.uiState.meeting.color =  String.format("#%06X", 0xFFFFFF and color)
                             meetingsDetailsBinding.fabColor.backgroundTintList = ColorStateList.valueOf(color)
                         }
                     }
@@ -142,16 +136,16 @@ class MeetingDetailsFragment
 
     private fun setOnDateSetListener() {
         dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            startTime.set(Calendar.YEAR, year)
-            startTime.set(Calendar.MONTH, monthOfYear)
-            startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            superViewModel.startTime.set(Calendar.YEAR, year)
+            superViewModel.startTime.set(Calendar.MONTH, monthOfYear)
+            superViewModel.startTime.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            endTime.set(Calendar.YEAR, year)
-            endTime.set(Calendar.MONTH, monthOfYear)
-            endTime.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            superViewModel.endTime.set(Calendar.YEAR, year)
+            superViewModel.endTime.set(Calendar.MONTH, monthOfYear)
+            superViewModel.endTime.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
             meetingsDetailsBinding.etDate.setText(
-                    SimpleDateFormat("dd-M-yyyy", Locale.US).format(startTime.time)
+                    SimpleDateFormat("dd-M-yyyy", Locale.US).format(superViewModel.startTime.time)
             )
             if (!meetingsDetailsBinding.etDate.text.isNullOrEmpty()){
                 meetingsDetailsBinding.etDate.background = context?.resources?.getDrawable(R.drawable.et_blue_rounded)
@@ -165,10 +159,10 @@ class MeetingDetailsFragment
     private fun setOnTimeSetListener() {
 
         startTime_TimeSetListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            startTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            startTime.set(Calendar.MINUTE, minute)
+            superViewModel.startTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            superViewModel.startTime.set(Calendar.MINUTE, minute)
             meetingsDetailsBinding.etStartTime.setText(
-                    SimpleDateFormat("HH:mm", Locale.US).format(startTime.time)
+                    SimpleDateFormat("HH:mm", Locale.US).format(superViewModel.startTime.time)
             )
             if (!meetingsDetailsBinding.etStartTime.text.isNullOrEmpty()){
                 meetingsDetailsBinding.etStartTime.background = context?.resources?.getDrawable(R.drawable.et_blue_rounded)
@@ -185,10 +179,10 @@ class MeetingDetailsFragment
         }
 
         endTime_TimeSetListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            endTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            endTime.set(Calendar.MINUTE, minute)
+            superViewModel.endTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            superViewModel.endTime.set(Calendar.MINUTE, minute)
             meetingsDetailsBinding.etEndTime.setText(
-                    SimpleDateFormat("HH:mm", Locale.US).format(endTime.time)
+                    SimpleDateFormat("HH:mm", Locale.US).format(superViewModel.endTime.time)
             )
             if (!meetingsDetailsBinding.etEndTime.text.isNullOrEmpty()){
                 meetingsDetailsBinding.etEndTime.background = context?.resources?.getDrawable(R.drawable.et_blue_rounded)
@@ -224,15 +218,19 @@ class MeetingDetailsFragment
 
         customTagPickerBinding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.tag_picker_layout, null, false)
-
+        customTagPickerBinding.uiState = viewModel.tagsEntryUiState
         customTagPickerDialog = MaterialDialog.Builder(context!!)
                 .customView(customTagPickerBinding.root, true)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .build()
 
+        customTagPickerBinding.tagsReloadBtn.setOnClickListener {
+            presenter.fetchTags()
+        }
+
         val chipsLayoutManager = ChipsLayoutManager.newBuilder(context)
-                .setMaxViewsInRow(3)
+                .setMaxViewsInRow(5)
                 .setOrientation(ChipsLayoutManager.HORIZONTAL)
                 .build()
 
@@ -243,7 +241,7 @@ class MeetingDetailsFragment
 
         tagPickerClassTagsAdapter.onTagClickedListener = object : MeetingTagsAdapter.OnTagClickedListener {
             override fun onTagClicked(tag: Tag) {
-                presenter.tagClass(tag)
+                presenter.tagMeeting(tag)
                 customTagPickerDialog.hide()
             }
         }
@@ -268,14 +266,6 @@ class MeetingDetailsFragment
         googleApiClient = null
     }
 
-    private fun checkInternetPermissions() {
-        requestAppPermissions(
-                arrayOf(
-                        android.Manifest.permission.INTERNET
-                ),
-                R.string.we_need_permission_to_function, PERMISSION_REQUEST_CODE)
-    }
-
     override fun onConnectionFailed(p0: ConnectionResult) {
         if(p0.errorMessage !=  null){
             showError(p0.errorMessage!!)
@@ -284,7 +274,6 @@ class MeetingDetailsFragment
         }
     }
 
-    
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) = MeetingDetailsFragment()

@@ -6,7 +6,7 @@ import android.content.*
 import android.os.IBinder
 import com.flycode.timespace.R
 import com.flycode.timespace.broadcastReceivers.ServiceStartedReceiver
-import com.flycode.timespace.data.network.AuthService
+import com.flycode.timespace.data.network.retrofit.AuthService
 import com.flycode.timespace.services.userService.UserService
 import com.flycode.timespace.ui.auth.AuthActivity
 import com.flycode.timespace.ui.base.BasePresenter

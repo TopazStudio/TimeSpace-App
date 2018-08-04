@@ -3,7 +3,7 @@ package com.flycode.timespace.ui.auth.signup
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import com.apollographql.apollo.ApolloClient
-import com.flycode.timespace.data.network.TempService
+import com.flycode.timespace.data.network.retrofit.TempService
 import com.flycode.timespace.di.scope.PerFragmentLevel1
 import dagger.Module
 import dagger.Provides

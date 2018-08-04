@@ -9,6 +9,7 @@ import com.flycode.timespace.R
 import com.flycode.timespace.data.models.Tag
 import com.flycode.timespace.ui.base.BasePresenter
 import com.flycode.timespace.ui.main.entries.classEntry.PlaceAutocompleteAdapter
+import com.flycode.timespace.ui.main.entries.meetingEntry.MeetingEntryViewModel
 import com.google.android.gms.location.places.Places
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -19,11 +20,12 @@ class MeetingDetailsPresenter(
         val apolloClient: ApolloClient,
         val placeAutocompleteAdapter: PlaceAutocompleteAdapter,
         val mainTagsAdapter: MeetingTagsAdapter,
-        val tagPickerTagsAdapter: MeetingTagsAdapter
+        val tagPickerTagsAdapter: MeetingTagsAdapter,
+        val superViewModel: MeetingEntryViewModel
 ) : BasePresenter<MeetingDetailsFragment, MeetingDetailsPresenter, MeetingDetailsViewModel>(),
         MeetingDetailsContract.MeetingDetailsPresenter<MeetingDetailsFragment> {
 
-        fun onSuggestionItemPicked(adapterView: AdapterView<*>, view1: View, i: Int, l: Long) {
+    fun onSuggestionItemPicked(adapterView: AdapterView<*>, view1: View, i: Int, l: Long) {
         view?.let { view ->
             Places.GeoDataApi.getPlaceById(
                     view.googleApiClient!!,
@@ -34,7 +36,7 @@ class MeetingDetailsPresenter(
                     it.release()
                 }
 
-                viewModel.uiState.location.apply {
+                superViewModel.uiState.location.apply {
                     this.address = it[0].address.toString()
                     this.latLng = "${it[0].latLng.latitude},${it[0].latLng.longitude}"
                 }
@@ -43,10 +45,9 @@ class MeetingDetailsPresenter(
         }
     }
 
-
     fun fetchTags() {
         view?.let {view ->
-            viewModel.uiState.isTagsLoading = true
+            viewModel.tagsEntryUiState.isTagsLoading = true
             compositeDisposable.add(
                     Rx2Apollo.from(apolloClient.query(
                             GetUserTagsQuery.builder().build()))
@@ -57,12 +58,18 @@ class MeetingDetailsPresenter(
                                     val tags = Gson().fromJson<List<Tag>>(Gson().toJson(it),
                                             object : TypeToken<List<Tag>>(){}.type
                                     )
-                                    tagPickerTagsAdapter.addMultipleTags(tags)
+                                    if (tags.isEmpty()){
+                                        viewModel.tagsEntryUiState.isEmptyTagsHidden = false
+                                    }else{
+                                        viewModel.tagsEntryUiState.isEmptyTagsHidden = true
+                                        tagPickerTagsAdapter.clear()
+                                        tagPickerTagsAdapter.addMultipleTags(tags)
+                                    }
                                 }
-                                viewModel.uiState.isTagsLoading = false
+                                viewModel.tagsEntryUiState.isTagsLoading = false
                             },{
-                                viewModel.uiState.isTagsLoading = false
-                                viewModel.uiState.onTagsError = true
+                                viewModel.tagsEntryUiState.isTagsLoading = false
+                                viewModel.tagsEntryUiState.onTagsError = true
                                 if (it.message != null){
                                     view.showError(it.message.toString())
                                 }else{
@@ -73,7 +80,7 @@ class MeetingDetailsPresenter(
         }
     }
 
-    fun tagClass(tag: Tag) {
+    fun tagMeeting(tag: Tag) {
         mainTagsAdapter.addTag(tag)
         checkEmptyTags()
     }

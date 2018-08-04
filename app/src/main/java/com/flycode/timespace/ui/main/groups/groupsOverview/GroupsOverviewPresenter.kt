@@ -12,7 +12,7 @@ import com.flycode.timespace.SearchOrganizationQuery
 import com.flycode.timespace.data.models.Group
 import com.flycode.timespace.data.models.GroupMembership
 import com.flycode.timespace.data.models.Organization
-import com.flycode.timespace.data.network.GroupService
+import com.flycode.timespace.data.network.retrofit.GroupService
 import com.flycode.timespace.ui.base.BasePresenter
 import com.flycode.timespace.ui.flexible_items.ExpandableHeaderItem
 import com.flycode.timespace.ui.flexible_items.GroupListItem

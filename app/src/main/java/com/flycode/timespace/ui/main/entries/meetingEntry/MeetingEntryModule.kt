@@ -1,6 +1,7 @@
 package com.flycode.timespace.ui.main.entries.meetingEntry
 
 import android.arch.lifecycle.ViewModelProviders
+import com.apollographql.apollo.ApolloClient
 import com.flycode.timespace.di.scope.PerFragmentLevel1
 import dagger.Module
 import dagger.Provides
@@ -10,9 +11,9 @@ open class MeetingEntryModule {
     @Provides
     @PerFragmentLevel1
     fun providePresenter(
-            
+            apolloClient: ApolloClient
     ): MeetingEntryPresenter = MeetingEntryPresenter(
-            
+           apolloClient = apolloClient
     )
 
     @Provides

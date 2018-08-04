@@ -12,6 +12,24 @@
         <item>remove_image</item>
     </string-array>
 
+    <string-array name="uploadImage_without_removing">
+        <item>Pick from gallery</item>
+        <item>Take a photo</item>
+    </string-array>
+    <string-array name="uploadImage_without_removing_ids">
+        <item>pick_from_gallery</item>
+        <item>take_a_photo</item>
+    </string-array>
+
+    <string-array name="chooseFileToAdd">
+        <item>Document</item>
+        <item>Image</item>
+    </string-array>
+    <string-array name="chooseFileToAddIds">
+        <item>document</item>
+        <item>image</item>
+    </string-array>
+
     <string-array name="name_prefix">
         <item>Mr.</item>
         <item>Mrs.</item>

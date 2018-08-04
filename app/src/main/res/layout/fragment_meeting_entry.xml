@@ -27,7 +27,7 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"/>
+                app:layout_scrollFlags="scroll|enterAlways"/>
 
             <!--TAB LAYOUT-->
             <android.support.design.widget.TabLayout
@@ -46,8 +46,38 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="100dp"/>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <FrameLayout
+            android:id="@+id/main_loading_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:visibility="@{viewModel.uiState.isLoading? View.VISIBLE : View.GONE}">
+            <ProgressBar
+                android:id="@+id/main_progress_bar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/main_reload_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:visibility="@{viewModel.uiState.onError? View.VISIBLE : View.GONE}">
+            <ImageButton
+                android:id="@+id/main_reload_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_refresh_white_24dp"
+                android:background="@drawable/circle_btn_primary"
+                android:elevation="3dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/retry" />
+        </FrameLayout>
 
         <!--FAB-->
         <android.support.design.widget.FloatingActionButton

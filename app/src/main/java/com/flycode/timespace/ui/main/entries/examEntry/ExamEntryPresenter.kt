@@ -45,7 +45,7 @@ class ExamEntryPresenter(
                                             .id(0.toString())
                                             .tag_id(it.id.toString())
                                             .taggable_id(viewModel.uiState.examination.id.toString())
-                                            .taggable_type("clazz")
+                                            .taggable_type("examination")
                                             .build()
                                 }
                         )

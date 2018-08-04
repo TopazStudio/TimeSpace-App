@@ -2,7 +2,7 @@ package com.flycode.timespace.ui.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
-import com.flycode.timespace.data.network.AuthService
+import com.flycode.timespace.data.network.retrofit.AuthService
 import com.flycode.timespace.di.scope.PerActivity
 import dagger.Module
 import dagger.Provides

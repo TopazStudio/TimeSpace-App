@@ -2,7 +2,7 @@ package com.flycode.timespace.ui.auth.signup.UserDetails
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
-import com.flycode.timespace.data.network.AuthService
+import com.flycode.timespace.data.network.retrofit.AuthService
 import com.flycode.timespace.di.scope.PerFragmentLevel2
 import com.flycode.timespace.ui.auth.signup.SignUpViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

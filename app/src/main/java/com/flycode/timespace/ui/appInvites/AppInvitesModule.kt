@@ -1,7 +1,7 @@
 package com.flycode.timespace.ui.appInvites
 
 import android.arch.lifecycle.ViewModelProviders
-import com.flycode.timespace.data.network.AppInvitesService
+import com.flycode.timespace.data.network.retrofit.AppInvitesService
 import com.flycode.timespace.di.scope.PerActivity
 import dagger.Module
 import dagger.Provides

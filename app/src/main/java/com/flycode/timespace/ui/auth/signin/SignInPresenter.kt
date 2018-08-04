@@ -15,7 +15,7 @@ import com.flycode.timespace.R
 import com.flycode.timespace.data.models.LoginPayload
 import com.flycode.timespace.data.models.Response
 import com.flycode.timespace.data.models.User
-import com.flycode.timespace.data.network.AuthService
+import com.flycode.timespace.data.network.retrofit.AuthService
 import com.flycode.timespace.ui.auth.signup.SignUpFragment
 import com.flycode.timespace.ui.auth.signup.UserDetails.UserDetailsFragment
 import com.flycode.timespace.ui.base.BasePresenter

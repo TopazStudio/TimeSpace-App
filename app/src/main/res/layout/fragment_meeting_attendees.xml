@@ -10,6 +10,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <!--APP BAR-->
@@ -17,54 +18,52 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:elevation="0dp"
             android:fitsSystemWindows="true"
             android:background="@color/colorPrimaryDark"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="15sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                app:cardElevation="3dp"
-                app:cardCornerRadius="3dp"
-                app:cardBackgroundColor="@color/colorWhite">
-
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:layout_height="50dp"
+                    android:background="@color/colorWhite"
                     android:orientation="horizontal">
-
                     <EditText
-                        android:id="@+id/ed_search"
+                        android:id="@+id/et_search"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:padding="10dp"
-                        android:hint="@string/search"
+                        android:layout_marginTop="0dp"
                         android:background="@color/colorWhite"
+                        android:hint="@string/search"
+                        android:padding="10dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:layout_gravity="top"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp"
                         android:textColor="@color/colorBlack"
-                        android:textColorHint="@color/colorDarkerGray"
-                        android:inputType="text" />
-
+                        android:textColorHint="@color/colorDarkGray"
+                        android:inputType="text"/>
                     <ImageButton
                         android:id="@+id/btn_search_toggle"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/ic_search_black_24dp"
-                        android:layout_gravity="center"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/navigation_close"
                         android:background="@color/colorWhite"
-                        android:scaleType="fitCenter"
-                        android:contentDescription="@string/search" />
+                        android:padding="10dp"
+                        android:src="@{viewModel.uiState.isSearchOpen? @drawable/ic_close_black_24dp : @drawable/ic_search_black_24dp}"/>
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorBgDarkGray"/>
+            </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -115,6 +114,34 @@
                     android:contentDescription="@string/retry" />
             </FrameLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="@{viewModel.uiState.showEmptyAttendeesHint? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/no_attendees_yet"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorDarkGray"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/use_search_to_add_attendee"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorDarkGray"/>
+
+            </LinearLayout>
         </FrameLayout>
 
         <!--SEARCH RESULTS-->
@@ -171,7 +198,7 @@
                 </LinearLayout>
 
                 <ImageButton
-                    android:id="@+id/btn_close_search_hint"
+                    android:id="@+id/btn_close_invitation_hint"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -193,7 +220,8 @@
                     android:id="@+id/results_progress_bar"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_gravity="center"/>
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="top|center"/>
             </FrameLayout>
 
             <FrameLayout
@@ -207,10 +235,11 @@
                     android:id="@+id/search_reload_btn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
                     android:src="@drawable/ic_refresh_white_24dp"
                     android:background="@drawable/circle_btn_primary"
                     android:elevation="3dp"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top|center"
                     android:contentDescription="@string/retry" />
             </FrameLayout>
 

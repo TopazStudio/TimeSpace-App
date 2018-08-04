@@ -1,14 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data class="CustomTagsPickerBinding"/>
-    <android.support.constraint.ConstraintLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class="CustomTagsPickerBinding">
+        <import type="android.view.View"/>
+        <variable
+            name="uiState"
+            type="com.flycode.timespace.ui.main.tags.TagsEntryUiState"/>
+    </data>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chips_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="300dp"/>
 
-    </android.support.constraint.ConstraintLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:visibility="@{uiState.isTagsLoading? View.VISIBLE : View.GONE}">
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:visibility="@{uiState.onTagsError? View.VISIBLE : View.GONE}">
+            <ImageButton
+                android:id="@+id/tags_reload_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_refresh_white_24dp"
+                android:background="@drawable/circle_btn_primary"
+                android:elevation="3dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/retry" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{uiState.isEmptyTagsHidden? View.GONE : View.VISIBLE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/no_tags_yet"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorDarkGray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/add_tags_from_the_tags_menu"
+                android:textSize="15sp"
+                android:textColor="@color/colorDarkGray"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 </layout>

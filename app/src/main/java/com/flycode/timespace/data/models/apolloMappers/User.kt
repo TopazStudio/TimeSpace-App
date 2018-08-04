@@ -86,4 +86,31 @@ object UserMapper{
                 .note(examination.note)
                 .build()
     }
+
+    fun mapDocumentToDocumentInput(document: Document): Document_Input {
+        return Document_Input
+                .builder()
+                .id(document.id.toString())
+                .name(document.name)
+                .description(document.description)
+                .type(document.type)
+                .size(document.size.toLong())
+                .remote_location(document.remote_location)
+                .documentable_id(document.documentable_id.toString())
+                .documentable_type(document.documentable_type)
+                .build()
+    }
+
+    fun mapMeetingToMeetingInput(meeting: Meeting): Meeting_Input {
+        return Meeting_Input
+                .builder()
+                .id(meeting.id.toString())
+                .owner_id(meeting.owner?.id.toString())
+                .time_table_id(meeting.timeTable?.id.toString())
+                .name(meeting.name)
+                .summary(meeting.summary)
+                .description("")
+                .color(meeting.color)
+                .build()
+    }
 }

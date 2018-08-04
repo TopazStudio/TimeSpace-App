@@ -103,9 +103,18 @@ class PlainUserListItem(
         }
 
         if (!user.pictures.isEmpty())
-            Picasso.get()
-                    .load(user.pictures[0].local_location)
+        {
+            if (!user.pictures[0].remote_location.isNullOrEmpty())
+                Picasso.get()
+                    .load(user.pictures[0].remote_location)
+                    .error(R.drawable.image_placeholder)
                     .into(holder?.im_picture)
+            else
+                Picasso.get()
+                    .load(user.pictures[0].remote_location)
+                    .error(R.drawable.image_placeholder)
+                    .into(holder?.im_picture)
+        }
         else holder?.im_picture?.setImageDrawable(
                 TextDrawable.builder().buildRound(
                         user.first_name.toCharArray()[0].toString(),

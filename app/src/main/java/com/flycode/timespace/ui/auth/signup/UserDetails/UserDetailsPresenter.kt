@@ -7,7 +7,7 @@ import com.facebook.login.LoginResult
 import com.flycode.timespace.data.models.LoginPayload
 import com.flycode.timespace.data.models.Response
 import com.flycode.timespace.data.models.User
-import com.flycode.timespace.data.network.AuthService
+import com.flycode.timespace.data.network.retrofit.AuthService
 import com.flycode.timespace.ui.auth.signup.SignUpViewModel
 import com.flycode.timespace.ui.base.BasePresenter
 import com.flycode.timespace.ui.main.MainActivity

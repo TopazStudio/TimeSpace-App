@@ -1,6 +1,6 @@
 package com.flycode.timespace.ui.appInvites
 
-import com.flycode.timespace.data.network.AppInvitesService
+import com.flycode.timespace.data.network.retrofit.AppInvitesService
 import com.flycode.timespace.ui.base.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

@@ -1,4 +1,4 @@
-package com.flycode.timespace.data.network
+package com.flycode.timespace.data.network.retrofit
 
 import com.flycode.timespace.data.models.Picture
 import com.flycode.timespace.data.models.Response

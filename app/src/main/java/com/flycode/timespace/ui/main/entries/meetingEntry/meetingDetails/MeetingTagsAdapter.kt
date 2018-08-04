@@ -9,17 +9,13 @@ import android.view.ViewGroup
 import com.flycode.timespace.R
 import com.flycode.timespace.data.models.Tag
 import com.pchmn.materialchips.ChipView
-import java.util.*
 
-class MeetingTagsAdapter(private val context: Context)
-    : RecyclerView.Adapter<MeetingTagsAdapter.ViewHolder>() {
+class MeetingTagsAdapter(
+        private val context: Context,
+        val tagList: MutableList<Tag>
+) : RecyclerView.Adapter<MeetingTagsAdapter.ViewHolder>() {
 
-    val tagList: MutableList<Tag>
     var onTagClickedListener: OnTagClickedListener? = null
-
-    init {
-        this.tagList = ArrayList()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context)

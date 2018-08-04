@@ -56,17 +56,42 @@ class Meeting: BaseObservable(), Serializable{
 
     var tags: MutableList<Tag> = ArrayList()
 
-    var attendances : List<Attendance>? = null
+    var attendances : MutableList<Attendance> = ArrayList()
+
+    var attendees : MutableList<User> = ArrayList()
+
+    var attachments : MutableList<Document> = ArrayList()
 
 
     @OneToMany(methods = [OneToMany.Method.ALL],variableName = "attendances")
-    fun getMyAttendances() : List<Attendance>?{
-        if (attendances == null)
+    fun getMyAttendances() : List<Attendance>{
+        if (attendances.isEmpty())
             attendances = SQLite.select()
                     .from(Attendance::class.java)
                     .where(Attendance_Table.attendable_id.eq(id),Attendance_Table.attendable_type.eq("meeting"))
                     .queryList()
         return attendances
+    }
+
+    //TODO: use attendances table to fetch attendees of meeting in where clause
+    @OneToMany(methods = [OneToMany.Method.ALL],variableName = "attendees")
+    fun getMyAttendees() : List<User>{
+        if (attendees.isEmpty())
+            attendees = SQLite.select()
+                    .from(User::class.java)
+                    .where(Attendance_Table.attendable_id.eq(id),Attendance_Table.attendable_type.eq("meeting"))
+                    .queryList()
+        return attendees
+    }
+
+    @OneToMany(methods = [OneToMany.Method.ALL],variableName = "attachments")
+    fun getMyAttachments() : List<Document>{
+        if (attachments.isEmpty())
+            attachments = SQLite.select()
+                    .from(Document::class.java)
+                    .where(Document_Table.documentable_id.eq(id),Document_Table.documentable_type.eq("meeting"))
+                    .queryList()
+        return attachments
     }
 
 }

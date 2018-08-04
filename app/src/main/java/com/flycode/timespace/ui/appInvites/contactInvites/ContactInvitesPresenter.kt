@@ -4,7 +4,7 @@ import android.provider.ContactsContract
 import com.flycode.timespace.data.models.Picture
 import com.flycode.timespace.data.models.Response
 import com.flycode.timespace.data.models.User
-import com.flycode.timespace.data.network.AppInvitesService
+import com.flycode.timespace.data.network.retrofit.AppInvitesService
 import com.flycode.timespace.ui.appInvites.AppInvitesViewModel
 import com.flycode.timespace.ui.base.BasePresenter
 import com.flycode.timespace.ui.flexible_items.ContactListItem

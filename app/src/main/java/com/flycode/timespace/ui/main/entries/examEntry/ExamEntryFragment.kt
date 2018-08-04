@@ -34,7 +34,6 @@ class ExamEntryFragment
     : BaseFragment<ExamEntryFragment, ExamEntryPresenter, ExamEntryViewModel>(),
         ExamEntryContract.ExamEntryFragment, GoogleApiClient.OnConnectionFailedListener {
 
-    private val PERMISSION_REQUEST_CODE = 0
     @Inject
     override lateinit var viewModel: ExamEntryViewModel
     @Inject

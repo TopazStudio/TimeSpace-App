@@ -3,15 +3,12 @@ package com.flycode.timespace.ui.base
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.support.annotation.CallSuper
 import android.support.annotation.Nullable
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.util.SparseIntArray
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -25,7 +22,7 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
     private var currentRequestCode: Int = 0
     protected lateinit var presenter: P
     protected open lateinit var viewModel: C
-    private val mErrorString: SparseIntArray? = null
+    protected val PERMISSION_REQUEST_CODE = 1 //Activity Request code
 
     @CallSuper
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
@@ -77,13 +74,15 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
         window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
     }
 
-    fun onPermissionsGranted(requestCode: Int){
+    open fun onPermissionsGranted(requestCode: Int){
         showMessage(resources.getString(R.string.permissions_granted))
     }
 
-    fun requestAppPermissions(requestedPermissions: Array<String>, stringId: Int, requestCode: Int) {
-        mErrorString?.put(requestCode, stringId)
+    open fun onPermissionsDenied(requestCode: Int, permissions: Array<String>, grantResults: IntArray){
+        showError(resources.getString(R.string.no_permissions))
+    }
 
+    fun requestAppPermissions(requestedPermissions: Array<String>, stringId: Int, requestCode: Int) {
         var permissionCheck = PackageManager.PERMISSION_GRANTED
         var showRequestPermissions = false
         for (permission in requestedPermissions) {
@@ -105,29 +104,20 @@ abstract class BaseActivity<V : BaseContract.View, P : BaseContract.Presenter<V>
         }
     }
 
+    @CallSuper
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        var permissionCheck = PackageManager.PERMISSION_GRANTED
-        for (permisson in grantResults) {
-            permissionCheck += permisson
-        }
+        if (requestCode == PERMISSION_REQUEST_CODE){
+            var permissionCheck = PackageManager.PERMISSION_GRANTED
+            for (permission in grantResults) {
+                permissionCheck += permission
+            }
 
-        if (grantResults.isNotEmpty() && PackageManager.PERMISSION_GRANTED == permissionCheck) {
-            onPermissionsGranted(requestCode)
-        } else {
-            //Display message when contain some Dangerous permisson not accept
-            Snackbar.make(findViewById<View>(android.R.id.content), mErrorString?.get(requestCode)!!,
-                    Snackbar.LENGTH_INDEFINITE).setAction("ENABLE") {
-                val i = Intent()
-                i.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                i.data = Uri.parse("package:$packageName")
-                i.addCategory(Intent.CATEGORY_DEFAULT)
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-                i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                startActivity(i)
-            }.show()
-        }
+            if (grantResults.isNotEmpty() && PackageManager.PERMISSION_GRANTED == permissionCheck) {
+                onPermissionsGranted(requestCode)
+            } else {
+                onPermissionsDenied(requestCode,permissions,grantResults)
+            }
+        }else super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     @CallSuper

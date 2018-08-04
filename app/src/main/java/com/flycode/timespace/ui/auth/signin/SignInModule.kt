@@ -3,7 +3,7 @@ package com.flycode.timespace.ui.auth.signin
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import com.apollographql.apollo.ApolloClient
-import com.flycode.timespace.data.network.AuthService
+import com.flycode.timespace.data.network.retrofit.AuthService
 import com.flycode.timespace.di.scope.PerFragmentLevel1
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import dagger.Module

@@ -17,6 +17,7 @@ class PlainHeaderItem(
         var entries: Int = 0
 ) : AbstractExpandableHeaderItem<PlainHeaderItem.ViewHolder, ISectionable<*, *>>() {
     init {
+        mExpanded = true
         mHidden = false
         mDraggable = false
         mSelectable = false

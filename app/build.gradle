@@ -122,6 +122,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.github.GoodieBag:PinView:v1.3'
+    implementation 'com.droidninja:filepicker:1.0.0'
+    implementation 'com.github.tingyik90:snackprogressbar:4.1'
 
     //CALENDAR
     implementation 'com.github.alamkanak:android-week-view:1.2.6'

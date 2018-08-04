@@ -3742,6 +3742,20 @@
                   "defaultValue": null
                 },
                 {
+                  "name": "location",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "Location_Input",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
                   "name": "users",
                   "description": null,
                   "type": {
@@ -3766,16 +3780,26 @@
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "LIST",
+                      "kind": "INPUT_OBJECT",
+                      "name": "Time_Input",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "taggeds",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
                       "name": null,
                       "ofType": {
-                        "kind": "NON_NULL",
-                        "name": null,
-                        "ofType": {
-                          "kind": "INPUT_OBJECT",
-                          "name": "Time_Input",
-                          "ofType": null
-                        }
+                        "kind": "INPUT_OBJECT",
+                        "name": "Tagged_Input",
+                        "ofType": null
                       }
                     }
                   },

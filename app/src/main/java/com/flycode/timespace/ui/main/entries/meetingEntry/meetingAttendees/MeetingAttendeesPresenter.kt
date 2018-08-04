@@ -1,8 +1,11 @@
 package com.flycode.timespace.ui.main.entries.meetingEntry.meetingAttendees
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.OnLifecycleEvent
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.rx2.Rx2Apollo
+import com.flycode.timespace.R
 import com.flycode.timespace.SearchUserQuery
 import com.flycode.timespace.data.models.User
 import com.flycode.timespace.ui.base.BasePresenter
@@ -26,6 +29,8 @@ class MeetingAttendeesPresenter(
 ) : BasePresenter<MeetingAttendeesFragment, MeetingAttendeesPresenter, MeetingAttendeesViewModel>(),
         MeetingAttendeesContract.MeetingAttendeesPresenter<MeetingAttendeesFragment> {
 
+    //TODO: allow complex search on both first,second and last name together with email
+    //TODO: sort by hit/score
     private fun searchUser(term :String): ApolloQueryCall<SearchUserQuery.Data> {
         return apolloClient.query(
                 SearchUserQuery
@@ -45,15 +50,15 @@ class MeetingAttendeesPresenter(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe ({
                         it.data()?.searchUser()!!.let {
-                            viewModel.usersSearchResultsList = Gson().fromJson(
+                            val usersSearchResultsList = Gson().fromJson<MutableList<User>>(
                                     Gson().toJson(it.hits()),
                                     object : TypeToken<MutableList<User>>() {}.type
                             )
 
                             val userSearchListItems =
                                     ArrayList<PlainUserListItem>().apply {
-                                        this.addAll(viewModel.usersSearchResultsList.map {
-                                            PlainUserListItem(viewModel.searchResultHeaderItem,it).apply {
+                                        this.addAll(usersSearchResultsList.map {
+                                            PlainUserListItem(viewModel.searchResultHeaderItem,it,view.context).apply {
                                                 this.listener = view
                                             }
                                         })
@@ -82,7 +87,7 @@ class MeetingAttendeesPresenter(
                         if (it.message != null){
                             view.showError(message = it.message.toString())
                         }else{
-                            view.showError("Something went wrong. Please try again.")
+                            view.showError(view.resources.getString(R.string.something_went_wrong))
                         }
                     })
         }
@@ -100,13 +105,16 @@ class MeetingAttendeesPresenter(
             if (!found){ //If not found add the item
                 addSubItem(plainUserListItem)
                 mainListAdapter.notifyDataSetChanged()
+                checkEmptyAttendees()
             }
         } else { //Nothing in the subItems. Add the item.
             addSubItem(plainUserListItem)
             mainListAdapter.notifyDataSetChanged()
+            checkEmptyAttendees()
         }
     }
 
+    //TODO: on rebind presenter reAdd the item's listener because activity is destroyed previously
     private fun addSubItem(plainUserListItem: PlainUserListItem){
         viewModel.mainListHeaderItem.addSubItem(viewModel.mainListHeaderItem.subItemsCount,
                 PlainUserListItem(viewModel.mainListHeaderItem,
@@ -117,5 +125,25 @@ class MeetingAttendeesPresenter(
                 }
         )
         viewModel.mainListHeaderItem.entries = 1 + viewModel.mainListHeaderItem.entries
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResume(){
+        checkEmptyAttendees()
+    }
+
+    private fun checkEmptyAttendees(){
+        if(viewModel.mainListHeaderItem.subItems == null || viewModel.mainListHeaderItem.subItems.isEmpty()){ //EMPTY
+            //SHOW EMPTY ATTENDEES HINT
+            if (!viewModel.uiState.showEmptyAttendeesHint){
+                viewModel.uiState.showEmptyAttendeesHint = true
+            }
+
+        }else{ //NOT EMPTY
+            //HIDE EMPTY ATTENDEES HINT
+            if (viewModel.uiState.showEmptyAttendeesHint){
+                viewModel.uiState.showEmptyAttendeesHint = false
+            }
+        }
     }
 }

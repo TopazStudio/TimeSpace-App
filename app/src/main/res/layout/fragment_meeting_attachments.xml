@@ -20,28 +20,10 @@
             android:id="@+id/attachments_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBgDarkGray"
+            android:background="@color/white"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="15dp"
-            android:contentDescription="@string/navigation_close"
-            android:backgroundTint="@color/colorGreen"
-            android:src="@drawable/ic_add_white_24dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:background="@color/colorPrimaryDark"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <!--android:visibility="@{viewModel.uiState.isMainLoading? View.VISIBLE : View.GONE}"-->
         <FrameLayout
             android:id="@+id/main_loading_frame"
             android:layout_width="match_parent"
@@ -53,10 +35,10 @@
                 android:id="@+id/main_progress_bar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center"/>
+                android:layout_marginTop="20dp"
+                android:layout_gravity="top|center"/>
         </FrameLayout>
 
-        <!--android:visibility="@{viewModel.uiState.onMainError? View.VISIBLE : View.GONE}"-->
         <FrameLayout
             android:id="@+id/main_reload_frame"
             android:layout_width="match_parent"
@@ -71,10 +53,48 @@
                 android:src="@drawable/ic_refresh_white_24dp"
                 android:background="@drawable/circle_btn_primary"
                 android:elevation="3dp"
-                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="top|center"
                 android:contentDescription="@string/retry" />
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.uiState.showEmptyAttachmentsHint? View.VISIBLE : View.GONE}">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/no_attachments_yet"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorDarkGray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/click_the_button_to_add_attachment"
+                android:textSize="15sp"
+                android:textColor="@color/colorDarkGray"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="15dp"
+            android:contentDescription="@string/navigation_close"
+            android:backgroundTint="@color/colorGreen"
+            android:src="@drawable/ic_add_white_24dp"/>
     </FrameLayout>
 </layout>

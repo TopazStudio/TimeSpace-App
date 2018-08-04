@@ -2,30 +2,18 @@ package com.flycode.timespace.ui.main.entries.meetingEntry.meetingDetails
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
-import com.flycode.timespace.data.models.Clazz
-import com.flycode.timespace.data.models.Location
-import com.flycode.timespace.data.models.Time
 import com.flycode.timespace.ui.base.BaseViewModel
+import com.flycode.timespace.ui.main.tags.TagsEntryUiState
 
 class MeetingDetailsViewModel
     : BaseViewModel<MeetingDetailsFragment, MeetingDetailsPresenter>() {
 
     val uiState = UiState()
+    val tagsEntryUiState = TagsEntryUiStateImpl()
 
     class UiState : BaseObservable(){
-        var clazz: Clazz = Clazz()
-        var location: Location = Location()
-        var time: Time = Time()
-
         @get: Bindable
         var onError: Boolean = false
-            set(value) {
-                field = value
-                notifyChange()
-            }
-
-        @get: Bindable
-        var isEmptyTimeHidden: Boolean = false
             set(value) {
                 field = value
                 notifyChange()
@@ -44,19 +32,27 @@ class MeetingDetailsViewModel
                 field = value
                 notifyChange()
             }
+    }
+
+    class TagsEntryUiStateImpl :  BaseObservable(), TagsEntryUiState{
+        @get: Bindable
+        override var isEmptyTagsHidden: Boolean = false
+            set(value) {
+                field = value
+                notifyChange()
+            }
 
         @get: Bindable
-        var isTagsLoading: Boolean = false
+        override var isTagsLoading: Boolean = false
             set(value) {
                 field = value
                 notifyChange()
             }
 
-        var onTagsError: Boolean = false
+        override var onTagsError: Boolean = false
             set(value) {
                 field = value
                 notifyChange()
             }
-
     }
 }
